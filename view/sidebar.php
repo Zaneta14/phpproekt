@@ -46,5 +46,5 @@
             </select>
         <input type="submit" value="Филтрирај"/>
     </form>
-    <h4><a href="<?php echo $app_path; ?>">Дома</a></h4>
+    <h4 class="home_button"><a href="<?php echo $app_path; ?>">Почетна</a></h4>
 </aside>

@@ -23,7 +23,7 @@
             $description = $product->getDescription();
         ?>
             <tr>
-                <td  >
+                <td>
                     <img src="images/<?php echo htmlspecialchars($product->getCode()); ?>.jpg"
                         alt="&nbsp;" width="400" height="400">
                 </td>
@@ -41,6 +41,10 @@
                     <p>
                         <!--<?php echo $first_paragraph; ?>-->
                         <?php echo htmlspecialchars($description); ?>
+                    </p>
+                    <p>
+                    <b>Огласот трае до: </b>
+                    <?php echo htmlspecialchars(substr($product->getFinishDate(),0,10)); ?>
                     </p>
                 </td>
             </tr>

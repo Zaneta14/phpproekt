@@ -1,10 +1,10 @@
 main{
-    border-left: 1px  solid rgba(0, 0, 0, 0.164) ;
-    border-right: 1px  solid rgba(0, 0, 0, 0.164) ;
+  
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: bold;
     float: left;
     width: 1200px;
+    margin-bottom: 55px;
     
 }
 title{
@@ -14,6 +14,7 @@ title{
 }
 
 body{
+   
     font-family: 'Montserrat Alternates', sans-serif;
     width: 1200px;
     margin: 0 auto;
@@ -53,17 +54,26 @@ select{
     margin-left: 2px;
 
 }
-
+.home_button{
+    margin-left: 19%;
+}
 footer{
-    
-   
+    position: fixed;
+    bottom:0;
+    opacity: 60%;
+    width: 1200px;
     background-color: rgb(219, 253, 208);
     padding-top: 9px;
     padding-left: 4px;
     border: 1px solid rgba(0, 0, 0, 0.144);
-    margin-top: 6px;
+    margin-top: 25px;
     
 }
+td{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144) ;
+    margin-top: 5px;
+}
+
 a{
     border: 1px solid rgba(2, 49, 2, 0.37);
     border-radius: 2px;
