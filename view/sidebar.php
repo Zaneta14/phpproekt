@@ -35,11 +35,16 @@
                             $name = $city->getName();
                             $id = $city->getID();
                         ?>
-                            <option value="<?php echo $id ?>">
+                            <option 
+                            <?php if (isset($city_id)) {
+                                if ($city_id == $id) { ?>selected="true" <?php }; ?>
+                            <?php } ?>
+                            value="<?php echo $id ?>">
                                 <?php echo $name?>
                             </option>
                         <?php endforeach; ?>
             </select>
         <input type="submit" value="Филтрирај"/>
     </form>
+    <h4><a href="<?php echo $app_path; ?>">Дома</a></h4>
 </aside>

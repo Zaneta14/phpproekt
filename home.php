@@ -28,12 +28,12 @@
                         alt="&nbsp;" width="400" height="400">
                 </td>
                 <td>
-                    <p>
+                    <h4>
                         <a href="products?product_id=<?php echo
                             $product->getID(); ?>">
                             <?php echo htmlspecialchars($product->getName()); ?>
                         </a>
-                    </p>
+                    </h4>
                     <p>
                         <b>Цена:</b>
                         <?php echo number_format($price, 2); ?> ден.
