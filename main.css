@@ -1,10 +1,95 @@
 main{
-    font-family: Arial, Helvetica, sans-serif;
+    border-left: 1px  solid rgba(0, 0, 0, 0.164) ;
+    border-right: 1px  solid rgba(0, 0, 0, 0.164) ;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: bold;
+    float: left;
+    width: 1200px;
+    
 }
 title{
     font-family: Arial, Helvetica, sans-serif;
+    
     color: rgb(48, 21, 5);
 }
-h1{
-    font-family: Arial, Helvetica, sans-serif;
+
+body{
+    font-family: 'Montserrat Alternates', sans-serif;
+    width: 1200px;
+    margin: 0 auto;
+}
+aside{
+    
+    float: left;
+    width: 260px;
+    padding: 3px;
+    
+}
+
+header{
+    text-shadow: 1px 1px rgb(82, 79, 95);
+    height: 70px;
+    background-color: rgb(219, 253, 208);
+    padding-left: 5px;
+    padding-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    margin-bottom: 6px;
+    
+}
+input{
+    background-color: rgb(219, 253, 208);
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 2px;
+}
+input:hover{
+    border: 1px solid rgba(0, 0, 0, 0.664);
+    
+}
+
+select{
+    font-family: 'Montserrat Alternates', sans-serif;
+    border: 1px solid rgba(0, 0, 0, 0.664);
+    border-radius: 2px;
+    margin-left: 2px;
+
+}
+
+footer{
+    
+   
+    background-color: rgb(219, 253, 208);
+    padding-top: 9px;
+    padding-left: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    margin-top: 6px;
+    
+}
+a{
+    border: 1px solid rgba(2, 49, 2, 0.37);
+    border-radius: 2px;
+    color: black;
+
+}
+a:hover{
+    background-color: rgb(219, 253, 208);
+    text-decoration: none;
+    color: rgb(2, 49, 2);
+}
+/* a :checked{
+    background-color: rgb(219, 253, 208);
+    text-decoration: none;
+} */
+
+#left_column {
+    float: left;
+    width: 150px;
+}
+#right_column {
+    float: left;
+    padding-left: 1em;
+    padding-bottom: .5em;
+    width: 330px;
+}
+.nofloat {
+    float: none;
 }

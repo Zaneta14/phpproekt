@@ -3,12 +3,15 @@
 
 
 <head>
-    <title>Sell And Buy - Портал за огласување</title>
+    <title>Sell And Buy</title>
     <link rel="stylesheet" type="text/css"
           href="<?php echo $app_path ?>main.css">
-</head>
+          <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet"> 
+          <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap" rel="stylesheet"> 
+    </head>
 
 <body>
 <header>
-    <h1>Sell And Buy - Портал за огласување</h1>
+    
+    <h2>Sell And Buy - Портал за огласување</h2>
 </header>

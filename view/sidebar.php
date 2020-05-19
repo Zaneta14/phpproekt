@@ -1,5 +1,5 @@
 <aside>
-<h2>Категории</h2>
+<h3>Категории</h3>
     <ul>
         <!-- display links for all categories -->
         <?php
@@ -20,7 +20,7 @@
         </li>
         <?php endforeach; ?>
     </ul>
-    <h2>Градови</h2>
+    <h3>Градови</h3>
     <form action="." method="post" id="select_city_form">
         <input type="hidden" name="action" value="cities_filter"/>
             <select name="selectedCity">

@@ -1,9 +1,9 @@
 <?php include 'view/header.php';?>
 <?php include 'view/sidebar.php'; ?>
 
-<main>
+<main class="nofloat">
 
-<h1>
+<h3>
     <?php if (isset($category_name)) { ?>
         Производи од категорија <?php echo $category_name ?>
     <?php } elseif (isset($city_name)) { ?>
@@ -11,9 +11,9 @@
     <?php } else { ?>
         Производи на неделата
     <?php } ?>
-</h1> 
+</h3> 
 
-<table class="table">
+<table >
     <?php if ($products==null) { ?>
         <p>Нема производи во оваа категорија.</p>
     <?php } else { ?>
