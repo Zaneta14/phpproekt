@@ -143,7 +143,6 @@ class UserDB {
 
         $city_id = $user->getCity()->getID();
         $email = $user->getEmail();
-        $name = $user->getName();
         $password = $user->getPassword();
         $firstName = $user->getFirstName();
         $lastName = $user->getLastName();
@@ -166,20 +165,21 @@ class UserDB {
             $statement->bindValue(':telNumber', $telNumber);
             $statement->bindValue(':userAddress', $address);
             $statement->execute();
+            
+            $user_id = $db->lastInsertId();
             $statement->closeCursor();
+            return $user_id;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
     }
 
-    public static function updateUser($user, $password_1, $password_2) {
+    public static function updateUser($user_id, $user, $password_1, $password_2) {
         $db = Database::getDB();
 
-        $user_id = $user->getID();
         $city_id = $user->getCity()->getID();
         $email = $user->getEmail();
-        $name = $user->getName();
         $firstName = $user->getFirstName();
         $lastName = $user->getLastName();
         $telNumber = $user->getTelNumber();

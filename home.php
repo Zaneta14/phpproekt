@@ -1,3 +1,15 @@
+<?php
+
+            require_once('util/main.php');
+            require_once('model/database.php');
+            require_once('model/category.php');
+            require_once('model/category_db.php');
+            require_once('model/user.php');
+            require_once('model/user_db.php');
+            require_once('model/city.php');
+                    require_once('model/city_db.php');
+                    ?>
+
 <?php include 'view/header.php';?>
 <?php include 'view/sidebar.php'; ?>
 

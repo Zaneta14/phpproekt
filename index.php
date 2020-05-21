@@ -2,6 +2,8 @@
 
 <?php
 require_once('util/main.php');
+require_once('model/database.php');
+
 require_once('model/product.php');
 require_once('model/product_db.php');
 require_once('model/category.php');
