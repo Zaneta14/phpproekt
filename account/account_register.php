@@ -1,9 +1,18 @@
+<?php
+            require_once('../model/database.php');
+            require_once('../model/category.php');
+            require_once('../model/category_db.php');
+            require_once('../util/main.php');
+            require_once('../model/city.php');
+            require_once('../model/city_db.php');
+?>
+
 <?php include '../view/header.php'; ?>
 <?php include '../view/sidebar.php'; ?>
 <?php 
 if (!isset($password_message)) { $password_message = ''; } 
 ?>
-<main>
+<main class="nofloat">
     <h1>Регистрација</h1>
     <form action="." method="post" id="register_form">
         <input type="hidden" name="action" value="register">
@@ -36,7 +45,7 @@ if (!isset($password_message)) { $password_message = ''; }
 
         <label>Град:</label>
         <input type="text" name="city"
-               value="<?php echo htmlspecialchars($city); ?>" 
+               value="<?php echo htmlspecialchars($city1); ?>" 
                size="30">
         <?php echo $fields->getField('city')->getHTML(); ?><br>
 
@@ -50,9 +59,9 @@ if (!isset($password_message)) { $password_message = ''; }
         <input type="text" name="telNumber"
                value="<?php echo htmlspecialchars($telNumber); ?>"
                size="30">
-        <?php echo $fields->getField('ship_line2')->getHTML(); ?><br>
+        <?php echo $fields->getField('telNumber')->getHTML(); ?><br>
 
-        <input type="submit" value="Register">
+        <input type="submit" value="Регистрирај се">
     </form>
 </main>
 <?php include '../view/footer.php'; ?>

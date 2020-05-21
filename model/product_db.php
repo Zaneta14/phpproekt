@@ -17,9 +17,11 @@ class ProductDB {
             $rows = $statement->fetchAll();
             $statement->closeCursor();
             $products=array();
+            
             foreach ($rows as $row) {
+                                $user=UserDB::getUser($row['userID'] ?? 'dv');
                                 $product = new Product($category,
-                                    $row['userID'],
+                                    $user,
                                     $row['productViews'],
                                     $row['productName'],
                                     $row['productDescription'],
@@ -56,8 +58,9 @@ class ProductDB {
         
             $products=array();
             foreach ($rows as $row) {
-                                $product = new Product($row['categoryID'],
-                                    $user_id,
+                                $category=CategoryDB::getCategory($row['categoryID'] ?? 'dv');
+                                $product = new Product($category,
+                                    $user,
                                     $row['productViews'],
                                     $row['productName'],
                                     $row['productDescription'],
@@ -115,8 +118,9 @@ class ProductDB {
             $statement->closeCursor();
         
             $category = CategoryDB::getCategory($row['categoryID'] ?? 'dv');
+            $user=UserDB::getUser($row['userID'] ?? 'dv');
             $product = new Product($category ?? 'dv',
-                $row['userID'] ?? 'dv',
+                $user ?? 'dv',
                 $row['productViews'] ?? 'dv',
                 $row['productName'] ?? 'dv',
                 $row['productDescription'] ?? 'dv',

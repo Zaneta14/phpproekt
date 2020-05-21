@@ -3,9 +3,12 @@ require_once('../util/main.php');
 require_once('../util/secure_conn.php');
 require_once('../model/database.php');
 
+require_once('../model/user.php');
 require_once('../model/user_db.php');
 //require_once('../model/order_db.php');
 require_once('../model/product_db.php');
+require_once('../model/city_db.php');
+require_once('../model/city.php');
 
 require_once('../model/fields.php');
 require_once('../model/validate.php');
@@ -44,7 +47,7 @@ switch ($action) {
         $email = '';
         $first_name = '';
         $last_name = '';
-        $city = '';
+        $city1 = '';
         $telNumber='';
         $address= '';
 
@@ -85,7 +88,7 @@ switch ($action) {
         }
 
         // Validate the data for the customer
-        if (is_valid_user_email($email)) {
+        if (UserDB::is_valid_user_email($email)) {
             display_error('The e-mail address ' . $email . ' is already in use.');
         }
         
@@ -95,13 +98,13 @@ switch ($action) {
         } else {
             $city_object=new City($city);
         }
-
+        
         // Add the customer data to the database
         $user=new User($city_object, $email, $password_1, $first_name, $last_name, $telNumber, $address);
-        $user_id = addUser($user);
+        $user_id = UserDB::addUser($user);
 
         // Store user data in session
-        $_SESSION['user'] = getUser($user_id);
+        $_SESSION['user'] = UserDB::getUser($user_id);
         
         // Redirect to the Checkout application if necessary
         if (isset($_SESSION['checkout'])) {
@@ -134,8 +137,8 @@ switch ($action) {
         }
         
         // Check email and password in database
-        if (is_valid_user_login($email, $password)) {
-            $_SESSION['user'] = getUserByEmail($email);
+        if (UserDB::is_valid_user_login($email, $password)) {
+            $_SESSION['user'] = UserDB::getUserByEmail($email);
         } else {
             $password_message = 'Login failed. Invalid email or password.';
             include 'account/account_login_register.php';
@@ -152,8 +155,7 @@ switch ($action) {
         }        
         break;
     case 'view_account':
-        $user_name = $_SESSION['user']->getFirstName() . ' ' .
-                         $_SESSION['user']->getLastName();
+        $user_name = $_SESSION['user']->getFirstName() . ' ' . $_SESSION['user']->getLastName();
         $email = $_SESSION['user']->getEmail();    
         $telNumber=$_SESSION['user']->getTelNumber();
         $address=$_SESSION['user']->getUserAddress();   
@@ -162,7 +164,7 @@ switch ($action) {
         
         //$billing_address = get_address($_SESSION['user']['billingAddressID']);        
 
-        $orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
+        //$orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
         $products=ProductDB::getProductsByUser($_SESSION['user']->getID());
         //$orders = get_orders_by_customer_id($_SESSION['user']['customerID']);
         if (!isset($orders)) {

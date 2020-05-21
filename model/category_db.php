@@ -15,8 +15,8 @@ class CategoryDB {
             
             $categories = array();
             foreach ($statement as $row) {
-                $category = new Category($row['categoryID'],
-                                        $row['categoryName']);
+                $category = new Category($row['categoryName'] ?? 'dv');
+                $category->setID($row['categoryID'] ?? 'dv');
                 $categories[] = $category;
             }
             return $categories;
@@ -36,8 +36,8 @@ class CategoryDB {
             $statement->execute();    
             $row = $statement->fetch();
             $statement->closeCursor();    
-            $category = new Category($row['categoryID'] ?? 'dv',
-                                    $row['categoryName'] ?? 'dv');
+            $category = new Category($row['categoryName'] ?? 'dv');
+            $category->setID($row['categoryID'] ?? 'dv');
             return $category;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();

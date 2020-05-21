@@ -77,8 +77,9 @@ class UserDB {
             $statement->execute();
             $rows = $statement->fetch();
             $statement->closeCursor();
-        
-            $user = new User($row['cityID'],
+
+            $city=CityDB::getCity($row['cityID']);
+            $user = new User($city,
                                     $row['userEmail'],
                                     $row['password'],
                                     $row['firstName'],
@@ -115,7 +116,7 @@ class UserDB {
                                     $row['lastName'] ?? 'dv',
                                     $row['telNumber'] ?? 'dv',
                                     $row['userAddress'] ?? 'dv');
-            $user->setID($row['userID']);
+            $user->setID($row['userID'] ?? 'dv');
             return $user;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();

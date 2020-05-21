@@ -15,27 +15,6 @@ require_once('model/user.php');
 require_once('model/user_db.php');
 require_once('model/city.php');
 require_once('model/city_db.php');
-
-
-$category_id = $product->getCategory()->getID();
-$product_code = $product->getCode();
-$product_name = $product->getName();
-$description = $product->getDescription();
-$price = $product->getPrice();
-$finish_date = substr($product->getFinishDate(),0,10);
-$start_date = substr($product->getStartDate(),0,10);
-$image_filename = $product_code . '.jpg';
-$image_path =  'images/' . $image_filename;
-$views = $product->getViews();
-$userID = $product->getUser();
-$user = UserDB::getUser($userID);
-
-
-$firstName = $user->getFirstName();
-$lastName = $user->getLastName();
-
-$description_with_tags = add_tags($description);
-
 ?>
 
 
