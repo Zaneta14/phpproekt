@@ -92,13 +92,14 @@ a:hover{
 
 #left_column {
     float: left;
-    width: 150px;
+    width: 360px;
 }
 #right_column {
     float: left;
     padding-left: 1em;
     padding-bottom: .5em;
-    width: 330px;
+    width: 460px;
+    margin-bottom: 30px;
 }
 .nofloat {
     float: none;

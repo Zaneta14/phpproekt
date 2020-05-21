@@ -41,7 +41,8 @@
                 </td>
                 <td>
                     <h4>
-                        <a href="products?product_id=<?php echo
+                   
+                    <a href="?product_id=<?php echo
                             $product->getID(); ?>">
                             <?php echo htmlspecialchars($product->getName()); ?>
                         </a>
