@@ -5,11 +5,13 @@
             require_once('../util/main.php');
             require_once('../model/city.php');
             require_once('../model/city_db.php');
+            require_once('../model/user.php');
+            require_once('../model/user_db.php');
 ?>
 
 <?php include '../view/header.php'; ?>
 <?php include '../view/sidebar.php'; ?>
-<main>
+<main class="nofloat">
     <h1>Мој профил</h1>
     <p><?php echo $user_name . ' (' . $email . ')'; ?></p>
     <p><?php echo $address; ?></p>

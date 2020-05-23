@@ -1,7 +1,7 @@
 <?php
 class Order {
-    private $id, $user, $orderDate, $shipDate;
-
+    private $id, $user, $orderDate;
+    
     public function __construct($user, $orderDate) {
         $this->user = $user;
         $this->orderDate = $orderDate;

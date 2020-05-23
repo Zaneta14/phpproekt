@@ -1,17 +1,21 @@
 <?php
-require_once('../util/main.php');
 require_once('../util/secure_conn.php');
 require_once('../model/database.php');
 
 require_once('../model/user.php');
 require_once('../model/user_db.php');
-//require_once('../model/order_db.php');
+require_once('../model/product.php');
+require_once('../model/product_db.php');
+require_once('../model/order_db.php');
+require_once('../model/order.php');
 
 require_once('../model/city_db.php');
 require_once('../model/city.php');
 
 require_once('../model/fields.php');
 require_once('../model/validate.php');
+require_once('../util/main.php');
+
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {

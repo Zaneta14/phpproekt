@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <?php
-require_once('util/main.php');
+
 require_once('model/database.php');
 
 require_once('model/product.php');
@@ -12,6 +12,7 @@ require_once('model/user.php');
 require_once('model/user_db.php');
 require_once('model/city.php');
 require_once('model/city_db.php');
+require_once('util/main.php');
 
 $product_id = filter_input(INPUT_GET,'product_id',FILTER_VALIDATE_INT);
 $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
