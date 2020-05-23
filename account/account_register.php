@@ -44,10 +44,24 @@ if (!isset($password_message)) { $password_message = ''; }
         <?php echo $fields->getField('last_name')->getHTML(); ?><br>
 
         <label>Град:</label>
-        <input type="text" name="city"
-               value="<?php echo htmlspecialchars($city1); ?>" 
-               size="30">
-        <?php echo $fields->getField('city')->getHTML(); ?><br>
+            <select name="city">
+                <option value="">Избери</option>
+                <?php 
+                    /*require_once('model/database.php');
+                    require_once('model/city.php');
+                    require_once('model/city_db.php');*/
+
+                    $cities = CityDB::getCities();
+                        foreach($cities as $city) :
+                            $name = $city->getName();
+                            $id = $city->getID();
+                        ?>
+                            <option value="<?php echo $id ?>">
+                            <?php echo htmlspecialchars($name)?>
+                            </option>
+                        <?php endforeach; ?>
+            </select>
+            
 
         <label>Адреса на живеење:</label>
         <input type="text" name="address"

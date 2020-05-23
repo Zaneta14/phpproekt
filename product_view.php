@@ -44,7 +44,8 @@ require_once('model/city_db.php');
 
     <p><b>Огласот трае до :</b> &nbsp; <?php echo $finish_date; ?></p>
 
-    <p><b>Објавено од : </b> &nbsp; <?php echo $firstName; ?> &nbsp; <?php echo $lastName; ?> </p>
+    <p><b>Објавено од : </b>
+    <a href="<?php echo $app_name?>?user_id=<?php echo $userID ?>"> &nbsp; <?php echo $firstName; ?> &nbsp; <?php echo $lastName; ?> </a></p>
    
     
 

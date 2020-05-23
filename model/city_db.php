@@ -94,42 +94,5 @@ class CityDB {
             display_db_error($error_message);
         }
     }
-
-    public static function cityExists($city_name) {
-        $db = Database::getDB();
-        $query = 'SELECT cityID FROM cities
-                  WHERE cityName = :city_name';    
-        try {
-            $statement = $db->prepare($query);
-            $statement->bindValue(':city_name', $city_name);
-            $statement->execute();    
-            $valid = ($statement->rowCount() == 1);
-            $statement->closeCursor();    
-            
-            return $valid;
-        }catch (PDOException $e) {
-            $error_message = $e->getMessage();
-            display_db_error($error_message);
-        }
-    }
-
-    public static function getCityByName($city_name) {
-        $db = Database::getDB();
-        $query = 'SELECT * FROM cities
-                  WHERE cityName = :city_name';    
-        try {
-            $statement = $db->prepare($query);
-            $statement->bindValue(':city_name', $city_name);
-            $statement->execute();    
-            $row = $statement->fetch();
-            $statement->closeCursor();    
-            $city = new City($row['cityName'] ?? 'dv');
-            $city->setID($row['cityID'] ?? 'dv');
-            return $city;
-        }catch (PDOException $e) {
-            $error_message = $e->getMessage();
-            display_db_error($error_message);
-        }
-    }
 }
 ?>

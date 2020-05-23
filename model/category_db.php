@@ -70,6 +70,7 @@ class CategoryDB {
                   VALUES
                      (:name)';
         try {
+            $statement = $db->prepare($query);
             $statement->bindValue(':name', $name);
             $statement->execute();
             $statement->closeCursor();

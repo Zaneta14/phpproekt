@@ -1,12 +1,10 @@
 <?php
 class Order {
-    private $id, $user, $shipAmount, $orderDate, $shipDate;
+    private $id, $user, $orderDate, $shipDate;
 
-    public function __construct($user, $shipAmount, $orderDate, $shipDate) {
+    public function __construct($user, $orderDate) {
         $this->user = $user;
-        $this->shipAmount = $shipAmount;
         $this->orderDate = $orderDate;
-        $this->shipDate = $shipDate;
     }
 
     public function getUser() {
@@ -15,14 +13,6 @@ class Order {
 
     public function setUser($value) {
         $this->user = $value;
-    }
-
-    public function getShipAmount() {
-        return $this->shipAmount;
-    }
-
-    public function setShipAmount($value) {
-        $this->shipAmount = $value;
     }
 
     public function getID() {
@@ -39,13 +29,5 @@ class Order {
 
     public function setOrderDate($value) {
         $this->orderDate = $value;
-    }
-    
-    public function getShipDate() {
-        return $this->shipDate;
-    }
-
-    public function setShipDate($value) {
-        $this->shipDate = $value;
     }
 }

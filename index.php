@@ -15,10 +15,14 @@ require_once('model/city_db.php');
 
 $product_id = filter_input(INPUT_GET,'product_id',FILTER_VALIDATE_INT);
 $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+$user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
+
 if ($category_id !== null) {
     $action = 'categories_filter';
 }elseif($product_id!==null){
     $action = 'product';
+}elseif($user_id!==null){
+    $action = 'user_filter';
 }
 else {
     $action = filter_input(INPUT_POST, 'action');
@@ -35,6 +39,7 @@ switch ($action) {
             $product = ProductDB::getProduct($id);
             $products[] = $product;
         }
+        
         include('home.php');
         break;
     case 'cities_filter':
@@ -51,6 +56,11 @@ switch ($action) {
         $products=ProductDB::getProductsByCategory($category_id);
         include('home.php');
         break;
+    /*case 'categories_cities_filter':
+        $city_id=filter_input(INPUT_POST, 'selectedCity');
+        $products=ProductDB::getProductsByCategoryAndCity($category_id, $city_id);
+        include('home.php');
+        break;*/
     case 'product' :
         $product = ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
@@ -70,7 +80,12 @@ switch ($action) {
         $description_with_tags = add_tags($description);
         include('product_view.php');
         break;
-
+    case 'user_filter':
+        $user=UserDB::getUser($user_id);
+        $user_name=$user->getFirstName().' '.$user->getLastName();
+        $products=ProductDB::getProductsByUser($user_id);
+        include('home.php');
+        break;
     default:
         display_error("Unknown action: " . $action);
         break;

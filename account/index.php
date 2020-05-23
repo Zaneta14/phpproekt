@@ -6,7 +6,7 @@ require_once('../model/database.php');
 require_once('../model/user.php');
 require_once('../model/user_db.php');
 //require_once('../model/order_db.php');
-require_once('../model/product_db.php');
+
 require_once('../model/city_db.php');
 require_once('../model/city.php');
 
@@ -60,7 +60,7 @@ switch ($action) {
         $password_2 = filter_input(INPUT_POST, 'password_2');
         $first_name = filter_input(INPUT_POST, 'first_name');
         $last_name = filter_input(INPUT_POST, 'last_name');
-        $city = filter_input(INPUT_POST, 'city');
+        $city_id = filter_input(INPUT_POST, 'city');
         $telNumber = filter_input(INPUT_POST, 'telNumber');
         $address = filter_input(INPUT_POST, 'address');
 
@@ -70,20 +70,20 @@ switch ($action) {
         $validate->text('password_2', $password_2, true, 6, 30);        
         $validate->text('first_name', $first_name);
         $validate->text('last_name', $last_name);
-        $validate->text('city', $city);
+        //$validate->text('city', $city);
         $validate->text('telNumber', $telNumber);
         $validate->text('address', $address);
 
         // If validation errors, redisplay Register page and exit controller
         if ($fields->hasErrors()) {
-            include 'account/account_register.php';
+            include 'account_register.php';
             break;
         }
 
         // If passwords don't match, redisplay Register page and exit controller
         if ($password_1 !== $password_2) {
             $password_message = 'Passwords do not match.';
-            include 'account/account_register.php';
+            include 'account_register.php';
             break;
         }
 
@@ -92,16 +92,11 @@ switch ($action) {
             display_error('The e-mail address ' . $email . ' is already in use.');
         }
         
-        //check if city exists
-        if (CityDB::cityExists($city)) {
-            $city_object=CityDB::getCityByName($city);
-        } else {
-            $city_object=new City($city);
-        }
-        
+        $city_object=CityDB::getCity($city_id);
+
         // Add the customer data to the database
-        $user=new User($city_object, $email, $password_1, $first_name, $last_name, $telNumber, $address);
-        $user_id = UserDB::addUser($user);
+        $userObj=new User($city_object, $email, $password_1, $first_name, $last_name, $telNumber, $address);
+        $user_id = UserDB::addUser($userObj);
 
         // Store user data in session
         $_SESSION['user'] = UserDB::getUser($user_id);
@@ -164,7 +159,7 @@ switch ($action) {
         
         //$billing_address = get_address($_SESSION['user']['billingAddressID']);        
 
-        //$orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
+        $orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
         $products=ProductDB::getProductsByUser($_SESSION['user']->getID());
         //$orders = get_orders_by_customer_id($_SESSION['user']['customerID']);
         if (!isset($orders)) {

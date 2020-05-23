@@ -48,7 +48,7 @@
         <input type="submit" value="Филтрирај"/>
     </form>
     <h4 class="home_button"><a href="<?php echo $app_name ?>">Почетна</a></h4>
-    <?php if (isset($category_id)) {
+    <?php if (isset($category_id) || isset($user_id)) {
         $account_url=$app_name.'account';
     }
     else {

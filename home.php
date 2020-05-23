@@ -20,6 +20,8 @@
         Производи од категорија <?php echo $category_name ?>
     <?php } elseif (isset($city_name)) { ?>
         Производи од град <?php echo $city_name ?>
+    <?php } elseif (isset($user_name)) { ?>
+        Производи од корисник <?php echo $user_name ?>
     <?php } else { ?>
         Производи на неделата
     <?php } ?>
@@ -65,4 +67,4 @@
         </table>
     <?php } ?>
 
-<?php include 'view/footer.php';?>
+<?php include 'view/footer.php'; ?>
