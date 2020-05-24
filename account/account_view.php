@@ -18,7 +18,7 @@
     <p><?php echo $telNumber; ?></p>
     <form action="." method="post">
         <input type="hidden" name="action" value="view_account_edit">
-        <input type="submit" value="Edit Account">
+        <input type="submit" value="Уреди">
     </form>
     
     <?php if (count($orders) > 0 ) : ?>

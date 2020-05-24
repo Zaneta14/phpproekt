@@ -75,7 +75,7 @@ class UserDB {
             $statement = $db->prepare($query);
             $statement->bindValue(":email", $email);
             $statement->execute();
-            $rows = $statement->fetch();
+            $row = $statement->fetch();
             $statement->closeCursor();
 
             $city=CityDB::getCity($row['cityID']);

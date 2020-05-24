@@ -8,7 +8,8 @@ require_once('../model/product.php');
 require_once('../model/product_db.php');
 require_once('../model/order_db.php');
 require_once('../model/order.php');
-
+require_once('../model/category.php');
+require_once('../model/category_db.php');
 require_once('../model/city_db.php');
 require_once('../model/city.php');
 
@@ -39,7 +40,7 @@ $fields->addField('password_2');
 $fields->addField('first_name');
 $fields->addField('last_name');
 $fields->addField('city');
-$fields->addField('telNumber');
+$fields->addField('tel_number');
 $fields->addField('address');
 
 // for the Login page
@@ -54,6 +55,7 @@ switch ($action) {
         $city1 = '';
         $telNumber='';
         $address= '';
+        $email_message1='';
 
         include 'account_register.php';
         break;
@@ -74,8 +76,7 @@ switch ($action) {
         $validate->text('password_2', $password_2, true, 6, 30);        
         $validate->text('first_name', $first_name);
         $validate->text('last_name', $last_name);
-        //$validate->text('city', $city);
-        $validate->text('telNumber', $telNumber);
+        $validate->text('tel_number', $telNumber);
         $validate->text('address', $address);
 
         // If validation errors, redisplay Register page and exit controller
@@ -93,7 +94,9 @@ switch ($action) {
 
         // Validate the data for the customer
         if (UserDB::is_valid_user_email($email)) {
-            display_error('The e-mail address ' . $email . ' is already in use.');
+            $email_message1 = 'The e-mail address ' . $email . ' is already in use.';
+            include 'account_register.php';
+            break;
         }
         
         $city_object=CityDB::getCity($city_id);
@@ -131,7 +134,7 @@ switch ($action) {
 
         // If validation errors, redisplay Login page and exit controller
         if ($fields->hasErrors()) {
-            include 'account/account_login_register.php';
+            include 'account_login_register.php';
             break;
         }
         
@@ -140,7 +143,7 @@ switch ($action) {
             $_SESSION['user'] = UserDB::getUserByEmail($email);
         } else {
             $password_message = 'Login failed. Invalid email or password.';
-            include 'account/account_login_register.php';
+            include 'account_login_register.php';
             break;
         }
 
@@ -158,14 +161,8 @@ switch ($action) {
         $email = $_SESSION['user']->getEmail();    
         $telNumber=$_SESSION['user']->getTelNumber();
         $address=$_SESSION['user']->getUserAddress();   
-
-        //$city = $_SESSION['user']->getCity();
-        
-        //$billing_address = get_address($_SESSION['user']['billingAddressID']);        
-
         $orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
         $products=ProductDB::getProductsByUser($_SESSION['user']->getID());
-        //$orders = get_orders_by_customer_id($_SESSION['user']['customerID']);
         if (!isset($orders)) {
             $orders = array();
         }   
@@ -191,69 +188,69 @@ switch ($action) {
         $last_name = $_SESSION['user']->getLastname();
         $address = $_SESSION['user']->getUserAddress();
         $tel_number = $_SESSION['user']->getTelNumber();
+        $city_id=$_SESSION['user']->getCity()->getID();
         $city_name=$_SESSION['user']->getCity()->getName();
 
         $password_message = '';
+        $password_message1 = '';
+        $email_message='';
 
         include 'account_edit.php';
         break;
     case 'update_account':
         // Get the customer data
-        $user_id = $_SESSION['user']->getID();;
+        $user_id = $_SESSION['user']->getID();
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $first_name = filter_input(INPUT_POST, 'first_name');
         $last_name = filter_input(INPUT_POST, 'last_name');
         $password_1 = filter_input(INPUT_POST, 'password_1');
         $password_2 = filter_input(INPUT_POST, 'password_2');
-        $city = filter_input(INPUT_POST, 'city');
+        $city_id = filter_input(INPUT_POST, 'city');
         $tel_number = filter_input(INPUT_POST, 'tel_number');
         $address = filter_input(INPUT_POST, 'address');
         $password_message = '';
 
         // Get the old data for the customer
         $old_user = UserDB::getUser($user_id);
+        $old_email=$old_user->getEmail();
+        $old_password=$old_user->getPassword();
 
         // Validate user data
         $validate->email('email', $email);
         $validate->text('password_1', $password_1, false, 6, 30);
-        $validate->text('password_2', $password_2, false, 6, 30);        
+        $validate->text('password_2', $password_2, false, 6, 30);               
         $validate->text('first_name', $first_name);
-        $validate->text('last_name', $last_name);        
-        $validate->text('city', $city);        
-        $validate->phone('tel_number', $tel_number);        
+        $validate->text('last_name', $last_name);       
+        $validate->text('tel_number', $tel_number);        
         $validate->text('address', $address);        
         
         // Check email change and display message if necessary
-        if ($email != $old_user->getEmail()) {
-            display_error('You can\'t change the email address for an account.');
+        if ($email != $old_email) {
+            $email_message = 'You can\'t change the email address for an account.';
+            $email=$old_email;
+                include 'account_edit.php';
+                break;
         }
 
         // If validation errors, redisplay Login page and exit controller
         if ($fields->hasErrors()) {
-            include 'account/account_edit.php';
+            include 'account_edit.php';
             break;
         }
-        
+
         // Only validate the passwords if they are NOT empty
         if (!empty($password_1) && !empty($password_2)) {            
             if ($password_1 !== $password_2) {
                 $password_message = 'Passwords do not match.';
-                include 'account/account_edit.php';
+                include 'account_edit.php';
                 break;
             }
         }
 
-        //check if city exists
-        if (CityDB::cityExists($city)) {
-            $city_object=CityDB::getCityByName($city);
-        } else {
-            $city_object=new City($city);
-        }
-
-        $old_password=$old_user->getPassword();
+        $city_object=CityDB::getCity($city_id);
 
         // Add the customer data to the database
-        $user=new User($city_object, $email, $old_password, $first_name, $last_name, $telNumber, $address);
+        $user=new User($city_object, $email, $old_password, $first_name, $last_name, $tel_number, $address);
         UserDB::updateUser($user_id, $user, $password_1, $password_2);
 
         // Set the new customer data in the session

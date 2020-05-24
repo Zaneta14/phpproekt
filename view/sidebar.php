@@ -48,17 +48,12 @@
         <input type="submit" value="Филтрирај"/>
     </form>
     <h4 class="home_button"><a href="<?php echo $app_name ?>">Почетна</a></h4>
-    <?php if (isset($category_id) || isset($user_id)) {
-        $account_url=$app_name.'account';
-    }
-    else {
-            $account_url = $app_path . 'account';
-    }
-    $logout_url = $account_url . '?action=logout';
+    <?php $account_url=$app_name.'account';
+    $logout_url = $app_name.'/account?action=logout';
             if (isset($_SESSION['user'])) :
             ?>
-                <h4 class="home_button"><a href="<?php echo $account_url; ?>">My Account</a></h4>
-                <h4 class="home_button"><a href="<?php echo $logout_url; ?>">Logout</a></h4>
+                <h4 class="home_button"><a href="<?php echo $account_url; ?>">Мој профил</a></h4>
+                <h4 class="home_button"><a href="<?php echo $logout_url; ?>">Одјава</a></h4>
             <?php else: ?>
                 <h4 class="home_button"><a href="<?php echo $account_url; ?>">Најава</a></h4>
             <?php endif; ?>

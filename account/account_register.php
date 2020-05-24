@@ -21,6 +21,7 @@ if (!isset($password_message)) { $password_message = ''; }
         <input type="text" name="email"
                value="<?php echo htmlspecialchars($email); ?>" size="30">
         <?php echo $fields->getField('email')->getHTML(); ?><br>
+        <span class="error"><?php echo htmlspecialchars($email_message1); ?></span><br>
 
         <label>Лозинка:</label>
         <input type="password" name="password_1" size="30">
@@ -61,7 +62,7 @@ if (!isset($password_message)) { $password_message = ''; }
                             </option>
                         <?php endforeach; ?>
             </select>
-            
+            <br/>
 
         <label>Адреса на живеење:</label>
         <input type="text" name="address"
@@ -73,7 +74,7 @@ if (!isset($password_message)) { $password_message = ''; }
         <input type="text" name="telNumber"
                value="<?php echo htmlspecialchars($telNumber); ?>"
                size="30">
-        <?php echo $fields->getField('telNumber')->getHTML(); ?><br>
+        <?php echo $fields->getField('tel_number')->getHTML(); ?><br>
 
         <input type="submit" value="Регистрирај се">
     </form>
