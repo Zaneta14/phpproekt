@@ -1,8 +1,11 @@
 <?php
 class Product {
-    private $id, $category, $user, $views, $name, $description, $code, $price, $startDate, $finishDate;
+    private $id, $category, $user, $views, $name, $description, 
+    $code, $price, $startDate, $finishDate, $shipAmount, $shipDays;
 
-    public function __construct($category, $user, $views, $name, $description, $code, $price, $startDate, $finishDate) {
+    public function __construct($category, $user, $views, $name,
+    $description, $code, $price, $startDate, 
+    $finishDate, $shipAmount, $shipDays) {
         $this->category = $category;
         $this->user = $user;
         $this->code = $code;
@@ -12,6 +15,8 @@ class Product {
         $this->description = $description;
         $this->startDate = $startDate;
         $this->finishDate = $finishDate;
+        $this->shipAmount = $shipAmount;
+        $this->shipDays = $shipDays;
     }
 
     public function getCategory() {
@@ -112,5 +117,21 @@ class Product {
     public function getImageAltText() {
         $image_alt = 'Image: ' . $this->getImageFilename();
         return $image_alt;
+    }
+
+    public function getShipAmount() {
+        return $this->shipAmount;
+    }
+
+    public function setShipAmount($value) {
+        $this->shipAmount = $value;
+    }
+
+    public function getShipDays() {
+        return $this->shipDays;
+    }
+
+    public function setShipDays($value) {
+        $this->shipDays = $value;
     }
 }

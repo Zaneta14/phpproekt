@@ -28,7 +28,9 @@ class ProductDB {
                                     $row['productCode'],
                                     $row['productPrice'],
                                     $row['startDate'],
-                                    $row['finishDate']);
+                                    $row['finishDate'],
+                                    $row['shipAmount'],
+                                    $row['shipDays']);
                 $product->setId($row['productID']);
                 $products[] = $product;
             }
@@ -67,7 +69,9 @@ class ProductDB {
                                     $row['productCode'],
                                     $row['productPrice'],
                                     $row['startDate'],
-                                    $row['finishDate']);
+                                    $row['finishDate'],
+                                    $row['shipAmount'],
+                                    $row['shipDays']);
                 $product->setId($row['productID']);
                 $products[] = $product;
             }
@@ -95,7 +99,9 @@ class ProductDB {
                             $productByUser->getCode(),
                             $productByUser->getPrice(),
                             $productByUser->getStartDate(),
-                            $productByUser->getFinishDate());
+                            $productByUser->getFinishDate(),
+                            $productByUser->getShipAmount(),
+                            $productByUser->getShipDays());
                     $product->setId($productByUser->getID());
                     $products[] = $product;
                 }
@@ -128,18 +134,20 @@ class ProductDB {
             $row = $statement->fetch();
             $statement->closeCursor();
         
-            $category = CategoryDB::getCategory($row['categoryID'] ?? 'dv');
-            $user=UserDB::getUser($row['userID'] ?? 'dv');
-            $product = new Product($category ?? 'dv',
-                $user ?? 'dv',
-                $row['productViews'] ?? 'dv',
-                $row['productName'] ?? 'dv',
-                $row['productDescription'] ?? 'dv',
-                $row['productCode'] ?? 'dv',
-                $row['productPrice'] ?? 'dv',
-                $row['startDate'] ?? 'dv',
-                $row['finishDate'] ?? 'dv');
-            $product->setID($row['productID'] ?? 'dv');
+            $category = CategoryDB::getCategory($row['categoryID'] ?? '');
+            $user=UserDB::getUser($row['userID'] ?? '');
+            $product = new Product($category ?? '',
+                $user ?? '',
+                $row['productViews'] ?? '',
+                $row['productName'] ?? '',
+                $row['productDescription'] ?? '',
+                $row['productCode'] ?? '',
+                $row['productPrice'] ?? '',
+                $row['startDate'] ?? '',
+                $row['finishDate'] ?? '',
+                $row['shipAmount'] ?? '',
+                $row['shipDays'] ?? '');
+            $product->setID($row['productID'] ?? '');
             return $product;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
@@ -174,11 +182,13 @@ class ProductDB {
         $views = $product->getViews();
         $startDate = $product->getStartDate();
         $finishDate = $product->getFinishDate();
+        $shipAmount=$product->getShipAmount();
+        $shipDays=$product->getShipDays();
 
         $query = 'INSERT INTO products
-                     (categoryID, userID, productViews, productName, productDescription, productCode, productPrice, startDate, finishDate)
+                     (categoryID, userID, productViews, productName, productDescription, productCode, productPrice, startDate, finishDate, shipAmount, shipDays)
                   VALUES
-                     (:category_id, :user_id, :views, :name, :description, :code, :price, :startdate, :finishdate)';
+                     (:category_id, :user_id, :views, :name, :description, :code, :price, :startdate, :finishdate, :shipamount, :shipdays)';
         try {
             $statement = $db->prepare($query);
             $statement->bindValue(':category_id', $category_id);
@@ -190,6 +200,8 @@ class ProductDB {
             $statement->bindValue(':description', $description);
             $statement->bindValue(':startdate', $startDate);
             $statement->bindValue(':finishdate', $finishDate);
+            $statement->bindValue(':shipamount', $shipAmount);
+            $statement->bindValue(':shipdays', $shipDays);
             $statement->execute();
             $statement->closeCursor();
         }catch (PDOException $e) {
@@ -211,6 +223,8 @@ class ProductDB {
         $views = $product->getViews();
         $startDate = $product->getStartDate();
         $finishDate = $product->getFinishDate();
+        $shipAmount=$product->getShipAmount();
+        $shipDays=$product->getShipDays();
 
         $query = 'UPDATE products
                     SET productName = :name,
@@ -221,7 +235,9 @@ class ProductDB {
                     userID=:user_id,
                     productViews=:views,
                     startDate=:startdate,
-                    finishDate=:finishdate
+                    finishDate=:finishdate,
+                    shipAmount=:shipamount,
+                    shipDays=:shipdays
                     WHERE productID = :product_id';
         try {
             $statement = $db->prepare($query);
@@ -235,6 +251,8 @@ class ProductDB {
             $statement->bindValue(':description', $description);
             $statement->bindValue(':startdate', $startDate);
             $statement->bindValue(':finishdate', $finishDate);
+            $statement->bindValue(':shipamount', $shipAmount);
+            $statement->bindValue(':shipdays', $shipDays);
             $statement->execute();
             $statement->closeCursor();
         }catch (PDOException $e) {

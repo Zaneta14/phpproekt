@@ -32,11 +32,29 @@
                        '?action=view_order&order_id=' . $order_id;
                 ?>
                 <li>
-                    <a href="<?php echo $url; ?>">Нарачка направена на <?php echo $order_date; ?>
-                    <?php echo $order_id; ?></a>
+                    <a href="<?php echo $url; ?>">Нарачка направена на <?php echo $order_date; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
+    <?php endif; ?>
+
+    <h2>Мои огласи</h2>
+    <h3><a href="?action=show_add_edit_form">Додај оглас</a></h3>
+    <?php if (count($products) > 0 ) : ?>
+        <ul>
+            <?php foreach($products as $product) :
+                $product_id = $product->getID();;
+                $product_name=$product->getName();
+                $url = $app_name . 'account' .
+                       '?action=view_product&product_id=' . $product_id;
+                ?>
+                <li>
+                    <a href="<?php echo $url; ?>"><?php echo $product_name ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php else : ?>
+        <h4>Нема огласи.</h4>
     <?php endif; ?>
 </main>
 <?php include '../view/footer.php'; ?>

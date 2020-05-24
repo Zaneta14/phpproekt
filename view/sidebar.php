@@ -22,7 +22,14 @@
         <?php endforeach; ?>
     </ul>
     <h3>Градови</h3>
-    <form action="." method="post" id="select_city_form">
+    <?php if (strpos($app_path, "account")) {
+        $act='..';
+    }
+        else {
+            $act='.';
+        }
+     ?>
+    <form action="<?php echo $act ?>" method="post" id="select_city_form">
         <input type="hidden" name="action" value="cities_filter"/>
             <select name="selectedCity">
                 <option value="">Сите</option>

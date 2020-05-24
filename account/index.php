@@ -169,6 +169,7 @@ switch ($action) {
         if (!isset($products)) {
             $products = array();
         }      
+        $product_description='';
         include 'account_view.php';
         break;
     case 'view_order':
@@ -182,13 +183,114 @@ switch ($action) {
         
         include 'account_view_order.php';
         break;
+    case 'view_product':
+        $product_id = filter_input(INPUT_GET, 'product_id', FILTER_VALIDATE_INT);
+        $product=ProductDB::getProduct($product_id);
+        $category_id = $product->getCategory()->getID();
+        $category_name = $product->getCategory()->getName();
+        $product_code = $product->getCode();
+        $product_name = $product->getName();
+        $product_description = $product->getDescription();
+        $product_price = $product->getPrice();
+        $product_finish_date = substr($product->getFinishDate(),0,10);
+        $product_start_date = substr($product->getStartDate(),0,10);
+        $image_filename = $product_code . '.jpg';
+        $image_path =  '../images/' . $image_filename;
+        $product_views = $product->getViews();
+        $product_ship_amount = $product->getShipAmount();
+        $product_ship_days = $product->getShipDays();
+        $description_with_tags = add_tags($product_description);
+
+        include 'account_view_product.php';
+        break;
+    case 'show_add_edit_form':
+        $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+        $category_id=filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+        $product=ProductDB::getProduct($product_id);
+        $product_name=$product->getName();
+        $product_code=$product->getCode();
+        $product_price=$product->getPrice();
+        $product_ship_amount=$product->getShipAmount();
+        $product_ship_days=$product->getShipDays();
+        $product_description=$product->getDescription();
+        $error_message='';
+        include 'product_add_edit.php';
+        break;
+    case 'add_product':
+        $category_id = filter_input(INPUT_POST, 'category_id', 
+                 FILTER_VALIDATE_INT);
+        $category_name=CategoryDB::getCategory($category_id)->getName();
+        $product_code = filter_input(INPUT_POST, 'code');
+        $product_name = filter_input(INPUT_POST, 'name');
+        $product_description = filter_input(INPUT_POST, 'description');
+        $product_price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+        $product_ship_days = filter_input(INPUT_POST, 'days', FILTER_VALIDATE_INT);
+        $product_ship_amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_INT);
+        $product_start_date=date("Y-m-d H:i:s");    
+        $product_finish_date=date("Y-m-d H:i:s");
+        $product_views=0;
+        $description_with_tags = add_tags($product_description);
+
+        // Validate inputs
+        if (empty($product_code) || empty($product_name) || empty($product_description) || 
+            empty($product_price) || empty($product_ship_days) || empty($product_ship_amount) 
+            || $product_price === false || $product_ship_days === false || $product_ship_amount === false) {
+                $error_message = 'Невалидни податоци. Провери ги сите полиња и пробај повторно.';
+                include('product_add_edit.php');
+        } else {
+            $category=CategoryDB::getCategory($category_id);
+            $user_id=$_SESSION['user']->getID();
+            $user=UserDB::getUser($user_id);
+            $product=new Product($category, $user, $product_views, $product_name, $product_description, $product_code, 
+            $product_price, $product_start_date, $product_finish_date, $product_ship_amount, $product_ship_days);
+            $product_id = ProductDB::addProduct($product);
+            $product = ProductDB::getProduct($product_id);
+            include('account_view_product.php');
+        }
+        break;    
+    case 'update_product':
+        $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+        $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+        $product_code = filter_input(INPUT_POST, 'code');
+        $product_name = filter_input(INPUT_POST, 'name');
+        $product_description = filter_input(INPUT_POST, 'description');
+        $product_price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+        $product_ship_days = filter_input(INPUT_POST, 'days', FILTER_VALIDATE_INT);
+        $product_ship_amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_INT);
+        $description_with_tags = add_tags($product_description);
+    
+        // Validate inputs
+        if (empty($product_code) || empty($product_name) || empty($product_description) || 
+            empty($product_price) || empty($product_ship_days) || empty($product_ship_amount) 
+            || $product_price === false || $product_ship_days === false || $product_ship_amount === false) {
+                $error_message = 'Невалидни податоци. Провери ги сите полиња и пробај повторно.';
+                include('product_add_edit.php');
+        } else {
+            $category=CategoryDB::getCategory($category_id);
+            $category_name=$category->getName();
+            $user_id=$_SESSION['user']->getID();
+            $user=UserDB::getUser($user_id);
+
+            $old_product=ProductDB::getProduct($product_id);
+            $product_views=$old_product->getViews();
+            $product_start_date=$old_product->getStartDate();
+            $product_finish_date=$old_product->getFinishDate();
+
+            $product_obj=new Product($category, $user, $product_views, $product_name, $product_description, $product_code, 
+            $product_price, $product_start_date, $product_finish_date, $product_ship_amount, $product_ship_days);
+            $product_obj->setID($product_id);
+            ProductDB::updateProduct($product_obj);
+            $product = ProductDB::getProduct($product_id);
+            include('account_view_product.php');
+            }
+        break;
     case 'view_account_edit':
         $email = $_SESSION['user']->getEmail();
         $first_name = $_SESSION['user']->getFirstName();
         $last_name = $_SESSION['user']->getLastname();
         $address = $_SESSION['user']->getUserAddress();
         $tel_number = $_SESSION['user']->getTelNumber();
-        $city_id=$_SESSION['user']->getCity()->getID();
+        $city_id1=$_SESSION['user']->getCity()->getID();
         $city_name=$_SESSION['user']->getCity()->getName();
 
         $password_message = '';
@@ -257,6 +359,27 @@ switch ($action) {
         $_SESSION['user'] = UserDB::getUser($user_id);
 
         redirect('.');
+        break;
+
+    case 'delete_product':
+        $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+        ProductDB::deleteProduct($product_id);
+
+        $user_name = $_SESSION['user']->getFirstName() . ' ' . $_SESSION['user']->getLastName();
+        $email = $_SESSION['user']->getEmail();    
+        $telNumber=$_SESSION['user']->getTelNumber();
+        $address=$_SESSION['user']->getUserAddress();   
+        $orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
+        $products=ProductDB::getProductsByUser($_SESSION['user']->getID());
+        if (!isset($orders)) {
+            $orders = array();
+        }   
+        if (!isset($products)) {
+            $products = array();
+        }      
+        $product_description='';
+        
+        include 'account_view.php';
         break;
 
     case 'logout':

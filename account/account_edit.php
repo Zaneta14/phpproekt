@@ -50,8 +50,8 @@
                             $id = $city->getID();
                             //$selected = ($id == $city_id) ? true : false;
                         ?>
-                            <option value="<?php echo $id ?>" <?php if (isset($city_id)) {
-                                if ($city_id == $id) { ?>selected="true" <?php }; ?>
+                            <option value="<?php echo $id ?>" <?php if (isset($city_id1)) {
+                                if ($city_id1 == $id) { ?>selected="true" <?php }; ?>
                             <?php } ?>>
                             <?php echo htmlspecialchars($name)?>
                             </option>

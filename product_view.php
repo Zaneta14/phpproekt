@@ -1,4 +1,3 @@
-
 <?php
 
 include 'view/header.php'; 
@@ -28,7 +27,7 @@ require_once('model/city_db.php');
     <p><b>Цена:</b>
         <?php echo number_format($price, 2); ?> ден.</p>
 
-        <form action="<?php echo $app_path . 'cart' ?>" method="get" 
+        <form action="<?php echo $app_name . 'cart' ?>" method="get" 
           id="add_to_cart_form">
         <input type="hidden" name="action" value="add" />
         <input type="hidden" name="product_id"
@@ -38,18 +37,14 @@ require_once('model/city_db.php');
     </form>
     
     <?php echo $description_with_tags; ?>
-    <p><b>Објавено на  :</b> &nbsp; <?php echo $start_date; ?></p>
+    <p><b>Објавено нa:</b> &nbsp; <?php echo $start_date; ?></p>
 
-    <p><b>Број на прегледи :</b> &nbsp; <?php echo $views; ?></p>
+    <p><b>Број на прегледи:</b> &nbsp; <?php echo $views; ?></p>
 
-    <p><b>Огласот трае до :</b> &nbsp; <?php echo $finish_date; ?></p>
+    <p><b>Огласот трае до:</b> &nbsp; <?php echo $finish_date; ?></p>
 
-    <p><b>Објавено од : </b>
+    <p><b>Објавено од: </b>
     <a href="<?php echo $app_name?>?user_id=<?php echo $userID ?>"> &nbsp; <?php echo $firstName; ?> &nbsp; <?php echo $lastName; ?> </a></p>
-   
-    
-
-    
 </div>
 
 
