@@ -25,10 +25,10 @@
         <h2>Мои нарачки</h2>
         <ul>
             <?php foreach($orders as $order) :
-                $order_id = $order['orderID'];
-                $order_date = strtotime($order['orderDate']);
+                $order_id = $order->getID();
+                $order_date = strtotime($order->getOrderDate());
                 $order_date = date('M j, Y', $order_date);
-                $url = $app_path . 'account' .
+                $url = $app_name . 'account' .
                        '?action=view_order&order_id=' . $order_id;
                 ?>
                 <li>

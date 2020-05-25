@@ -54,8 +54,14 @@ class OrderDB {
             $statement = $db->prepare($query);
             $statement->bindValue(':order_id', $order_id);
             $statement->execute();
-            $order = $statement->fetch();
+            $row = $statement->fetch();
             $statement->closeCursor();
+
+            $user=UserDB::getUser($row['userID'] ?? '');
+            $order = new Order($user ?? '',
+                $row['orderDate'] ?? '');
+            $order->setID($row['orderID'] ?? '');
+
             return $order;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
@@ -65,8 +71,9 @@ class OrderDB {
 
     function getOrderItems($order_id) {
         $db = Database::getDB();
+        $order=OrderDB::getOrder($order_id);
 
-        $query = 'SELECT * FROM OrderItems WHERE orderID = :order_id';
+        $query = 'SELECT * FROM orderItems WHERE orderID = :order_id';
 
         try {
             $statement = $db->prepare($query);
@@ -74,7 +81,16 @@ class OrderDB {
             $statement->execute();
             $order_items = $statement->fetchAll();
             $statement->closeCursor();
-            return $order_items;
+
+            $orderItems=array();
+            foreach($order_items as $order_item) {
+                $product_id=$order_item['productID'];
+                $product=ProductDB::getProduct($product_id);
+                $item=new OrderItem($order, $product, $order_item['shipDate']);
+                $item->setID($order_item['orderItemID']);
+                $orderItems[]=$item;
+            }
+            return $orderItems;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
@@ -89,14 +105,24 @@ class OrderDB {
             $statement = $db->prepare($query);
             $statement->bindValue(':user_id', $user_id);
             $statement->execute();
-            $order = $statement->fetchAll();
+            $rows = $statement->fetchAll();
             $statement->closeCursor();
-            return $order;
+            $user=UserDB::getUser($row['userID'] ?? '');
+
+            $orders=array();
+            foreach ($rows as $row) {
+                $order = new Order($user ?? '', $row['orderDate'] ?? '');
+                $order->setID($row['orderID'] ?? '');
+                $orders[]=$order;
+            }
+            return $orders;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
     }
+
+    
 
     //slicna funkcija ke treba vo product_db
     /*function set_ship_date($order_id) {

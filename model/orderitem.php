@@ -32,10 +32,10 @@ class OrderItem {
         $this->id = $value;
     }
     public function getShipDate() {
-        return $this->id;
+        return $this->shipDate;
     }
 
     public function setShipDate($value) {
-        $this->id = $value;
+        $this->shipDate = $value;
     }
 }
