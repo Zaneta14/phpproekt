@@ -16,7 +16,7 @@ require_once('../model/city.php');
 require_once('../model/fields.php');
 require_once('../model/validate.php');
 require_once('../util/main.php');
-
+require_once('../util/images.php');
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -183,22 +183,26 @@ switch ($action) {
         
         include 'account_view_order.php';
         break;
-    case 'view_product':
+    case 'view_product': //product_id go zemame od account_view.php tamu go postavuvame
+        //tuka gi postavuvame category_id i product_id
+        //potoa se prenesuvaat vo account_view_product kako hidden polinja
+        //i odat vo show_add_edit_form akcijata za na kraj da se prikazat vo product_add_edit
         $product_id = filter_input(INPUT_GET, 'product_id', FILTER_VALIDATE_INT);
         $product=ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
+        //$category=CategoryDB::getCategory($category_id);
         $category_name = $product->getCategory()->getName();
         $product_code = $product->getCode();
-        $product_name = $product->getName();
+      //  $product_name = $product->getName();
         $product_description = $product->getDescription();
-        $product_price = $product->getPrice();
-        $product_finish_date = substr($product->getFinishDate(),0,10);
-        $product_start_date = substr($product->getStartDate(),0,10);
+   //     $product_price = $product->getPrice();
+     //   $product_finish_date = substr($product->getFinishDate(),0,10);
+       // $product_start_date = substr($product->getStartDate(),0,10);
         $image_filename = $product_code . '.jpg';
         $image_path =  '../images/' . $image_filename;
-        $product_views = $product->getViews();
-        $product_ship_amount = $product->getShipAmount();
-        $product_ship_days = $product->getShipDays();
+       // $product_views = $product->getViews();
+       // $product_ship_amount = $product->getShipAmount();
+       // $product_ship_days = $product->getShipDays();
         $description_with_tags = add_tags($product_description);
 
         include 'account_view_product.php';
@@ -360,7 +364,33 @@ switch ($action) {
 
         redirect('.');
         break;
-
+    case 'upload_image':
+            $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+            $product = ProductDB::getProduct($product_id);
+            $product_code = $product->getCode();
+        
+            $category_id = $product->getCategory()->getID();
+            $category_name=$product->getCategory()->getName();
+            $product_description = $product->getDescription();
+            $image_filename = $product_code . '.jpg';
+            $image_path =  '../images/' . $image_filename;
+            $description_with_tags = add_tags($product_description);
+            $image_dir = $doc_root . $app_name . 'images/';
+        
+            if (isset($_FILES['file1'])) {
+                $source = $_FILES['file1']['tmp_name'];
+                $target = $image_dir . DIRECTORY_SEPARATOR . $image_filename;
+        
+                // save uploaded file with correct filename
+                move_uploaded_file($source, $target);
+        
+                // add code that creates the medium and small versions of the image
+                process_image($image_dir, $image_filename);
+        
+                // display product with new image
+                include('account_view_product.php');
+            }
+        break;
     case 'delete_product':
         $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
         ProductDB::deleteProduct($product_id);

@@ -203,7 +203,10 @@ class ProductDB {
             $statement->bindValue(':shipamount', $shipAmount);
             $statement->bindValue(':shipdays', $shipDays);
             $statement->execute();
+            $product_id = $db->lastInsertId();
+
             $statement->closeCursor();
+            return $product_id;
         }catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
