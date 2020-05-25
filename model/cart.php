@@ -5,10 +5,11 @@ if (!isset($_SESSION['cart']) ) {
 }
 
 function cartAddItem($product_id) {
-    // $_SESSION['cart'][$product_id] = round($quantity, 0);
-    $product = getProduct($product_id);
-    $_SESSION['last_category_id'] = $product['categoryID'];
-    $_SESSION['last_category_name'] = $product['categoryName'];
+    $product = ProductDB::getProduct($product_id);
+    $_SESSION['cart'][$product_id] = $product_id;
+    
+    $_SESSION['last_category_id'] = $product->getID();
+    $_SESSION['last_category_name'] = $product->getCategory()->getName();
 }
 
 function cartRemoveItem($product_id) {
@@ -21,12 +22,12 @@ function getCartItems() {
     $items = array();
     foreach ($_SESSION['cart'] as $product_id ) {
         
-        $product = get_product($product_id);
-        $price = $product['productPrice'];
+        $product = ProductDB::getProduct($product_id);
+        $price = $product->getPrice();
 
-
-        $items[$product_id]['name'] = $product['productName'];
-        $items[$product_id]['description'] = $product['productDescription'];
+        $items[$product_id]['id'] = $product->getID();
+        $items[$product_id]['name'] = $product->getName();
+        $items[$product_id]['description'] = $product->getDescription();
         $items[$product_id]['price'] = $price;
        
     }

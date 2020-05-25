@@ -1,4 +1,7 @@
+
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <aside>
+
 <h3>Категории</h3>
     <ul>
         <!-- display links for all categories -->
@@ -64,4 +67,7 @@
             <?php else: ?>
                 <h4 class="home_button"><a href="<?php echo $account_url; ?>">Најава</a></h4>
             <?php endif; ?>
+<?php $cart_url = $app_name.'cart'; ?>
+            <a id='cart' href="<?php echo $cart_url; ?>"><i  class="fa fa-shopping-cart" aria-hidden="true"></i></a>
 </aside>
+

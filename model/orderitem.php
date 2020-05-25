@@ -1,10 +1,11 @@
 <?php
 class OrderItem {
-    private $id, $order, $product;
+    private $id, $order, $product,$shipDate;
 
-    public function __construct($order, $product) {
+    public function __construct($order, $product,$shipDate) {
         $this->order = $order;
         $this->product = $product;
+        $this->shipDate = $shipDate;
     }
 
     public function getOrder() {
@@ -28,6 +29,13 @@ class OrderItem {
     }
 
     public function setID($value) {
+        $this->id = $value;
+    }
+    public function getShipDate() {
+        return $this->id;
+    }
+
+    public function setShipDate($value) {
         $this->id = $value;
     }
 }
