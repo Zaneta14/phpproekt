@@ -38,6 +38,21 @@
         </ul>
     <?php endif; ?>
 
+    <?php if (count($products_to_ship) > 0 ) : ?>
+        <h2>Нарачки за испорака</h2>
+        <ul>
+            <?php foreach($products_to_ship as $product_to_ship) :
+                $product_name=$product_to_ship->getProduct()->getName();
+                $order_item_id=$product_to_ship->getID();
+                $url=$app_name.'account?action=view_product_to_ship&order_item_id='.$order_item_id;
+                ?>
+                <li>
+                    <a href="<?php echo $url; ?>"><?php echo $product_name; ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
     <h2>Мои огласи</h2>
     <h3><a href="?action=show_add_edit_form">Додај оглас</a></h3>
     <?php if (count($products) > 0 ) : ?>

@@ -164,12 +164,16 @@ switch ($action) {
         $address=$_SESSION['user']->getUserAddress();   
         $orders=OrderDB::getOrdersByUser($_SESSION['user']->getID());
         $products=ProductDB::getProductsByUser($_SESSION['user']->getID());
+        $products_to_ship=OrderDB::getOrderItemsByUser($_SESSION['user']->getID());
         if (!isset($orders)) {
             $orders = array();
         }   
         if (!isset($products)) {
             $products = array();
-        }      
+        }  
+        if (!isset($products_to_ship)) {
+            $products_to_ship = array();
+        }     
         $product_description='';
         include 'account_view.php';
         break;
@@ -184,6 +188,17 @@ switch ($action) {
         
         include 'account_view_order.php';
         break;
+    case 'view_product_to_ship':
+        $order_item_id=filter_input(INPUT_GET, 'order_item_id', FILTER_VALIDATE_INT);
+        $order_item=OrderDB::getOrderItem($order_item_id);
+        $product_id=$order_item->getProduct()->getID();
+        $product=ProductDB::getProduct($product_id);
+        $order_id=$order_item->getOrder()->getID();
+        $order=OrderDB::getOrder($order_id);
+        $user_id=$order->getUser()->getID();
+        $user=UserDB::getUser($user_id);
+        include 'view_product_to_ship.php';
+    break;
     case 'view_product':
         $product_id = filter_input(INPUT_GET, 'product_id', FILTER_VALIDATE_INT);
         $product=ProductDB::getProduct($product_id);

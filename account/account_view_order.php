@@ -1,8 +1,4 @@
-<?php require_once('../model/database.php');
-            require_once('../model/order.php');
-            require_once('../model/order_db.php');
-            require_once('../model/user.php');
-            require_once('../model/user_db.php'); ?>
+
 <?php include '../view/header.php'; ?>
 <?php include '../view/sidebar.php'; ?>
 <main class="nofloat"> 
