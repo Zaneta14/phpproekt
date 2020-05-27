@@ -1,6 +1,6 @@
 <?php include '../../view/header.php'; ?>
 <?php include '../../view/sidebar_admin.php'; ?>
-<main>
+<main class="nofloat">
     <h1 class="top">Листа на сите производи</h1>
     <p>За да погледнете или избришете производ, одберете производ.</p>
     

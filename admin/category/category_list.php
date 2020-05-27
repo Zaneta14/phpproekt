@@ -1,6 +1,6 @@
-<?php include '../view/header.php'; ?>
-<?php include '../view/sidebar_admin.php'; ?>
-<main>
+<?php include '../../view/header.php'; ?>
+<?php include '../../view/sidebar_admin.php'; ?>
+<main class="nofloat">
 
     <h1>Менаџер на категории</h1>
     <table id="category_table">
@@ -40,4 +40,4 @@
     </form>
 
 </main>
-<?php include '../view/footer.php'; ?>
+<?php include '../../view/footer.php'; ?>

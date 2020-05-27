@@ -52,7 +52,9 @@ switch ($action) {
             display_error('Мора да внесете име за категоријата.
                            Обидете се повторно.');
         } else {
-            $category_id = CategoryDB::addCategory($name);
+            $category=new Category($name);
+            $category->setID($category_id);
+            $category_id = CategoryDB::addCategory($category);
         }
 
         header("Location: .");
@@ -67,7 +69,9 @@ switch ($action) {
             display_error('Мора да внесете име за категоријата.
             Обидете се повторно.');
         } else {
-            CategoryDB::updateCategory($name);
+            $category=new Category($name);
+            $category->setID($category_id);
+            CategoryDB::updateCategory($category);
         }
 
         header("Location: .");

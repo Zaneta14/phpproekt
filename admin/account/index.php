@@ -24,7 +24,7 @@ require_once('../../model/validate.php');
 require_once('../../util/images.php');
 
 $action = filter_input(INPUT_POST, 'action');
-if (admin_count() == 0) {
+if (AdminDB::admin_count() == 0) {
     if ($action != 'create') {
         $action = 'view_account';
     }
@@ -78,8 +78,8 @@ switch ($action) {
             break;
         }
 
-        if (is_valid_admin_login($email, $password)) {
-            $_SESSION['admin'] = get_admin_by_email($email);
+        if (AdminDB::is_valid_admin_login($email, $password)) {
+            $_SESSION['admin'] = AdminDB::get_admin_by_email($email);
         } else {
             $password_message = 'Неуспешно логирање.Погрешен е-маил или лозинка.';
             include 'account_login.php';
@@ -89,7 +89,7 @@ switch ($action) {
         break;
     case 'view_account':
         
-        $admins = get_all_admins();
+        $admins = AdminDB::get_all_admins();
 
        
         $email = '';
@@ -112,7 +112,7 @@ switch ($action) {
             $password_1 = filter_input(INPUT_POST, 'password_1');
             $password_2 = filter_input(INPUT_POST, 'password_2');
     
-            $admins = get_all_admins();
+            $admins = AdminDB::get_all_admins();
             $email_message = '';             
             $password_message = '';             
     
@@ -125,27 +125,27 @@ switch ($action) {
             
            
             if ($fields->hasErrors()) {
-                include 'admin/account/account_view.php';
+                include 'account_view.php';
                 break;
             }
             
-            if (is_valid_admin_email($email)) {
+            if (AdminDB::is_valid_admin_email($email)) {
                 $email_message = 'Веќе искористен е-маил.';
-                include 'admin/account/account_view.php';
+                include 'account_view.php';
                 break;
             }
             
             if ($password_1 !== $password_2) {
                 $password_message = 'Лозинките не се совпаѓаат.';
-                include 'admin/account/account_view.php';
+                include 'account_view.php';
                 break;
             }
-            $admin_id = add_admin($email, $first_name, $last_name,
+            $admin_id = AdminDB::add_admin($email, $first_name, $last_name,
                                  $password_1);
 
         
         if (!isset($_SESSION['admin'])) {
-            $_SESSION['admin'] = get_admin($admin_id);
+            $_SESSION['admin'] = AdminDB::get_admin($admin_id);
         }
 
         redirect('.');
@@ -154,7 +154,7 @@ switch ($action) {
         case 'view_edit':
             
             $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
-            $admin = get_admin($admin_id);
+            $admin = AdminDB::get_admin($admin_id);
             $first_name = $admin->getFirstName();
             $last_name = $admin->getLastName();
             $email = $admin->getEmail();
@@ -191,7 +191,7 @@ switch ($action) {
             break;
         }
         
-        update_admin($admin_id, $email, $first_name, $last_name, 
+        AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
                 $password_1, $password_2);
        
         if ($admin_id == $_SESSION['admin']['adminID']) {
@@ -226,7 +226,7 @@ switch ($action) {
                 break;
             }
             
-            update_admin($admin_id, $email, $first_name, $last_name, 
+            AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
                     $password_1, $password_2);
            
             if ($admin_id == $_SESSION['admin']['adminID']) {
@@ -253,7 +253,7 @@ switch ($action) {
                     break;
                 case 'logout':
                     unset($_SESSION['admin']);
-                    redirect($app_name . 'admin/account');
+                    redirect($app_name . 'admin');
                     break;
                 default:
                     display_error('Unknown account action: ' . $action);

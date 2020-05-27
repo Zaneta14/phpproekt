@@ -61,7 +61,8 @@
         <?php
       
         $account_url = '../'. 'admin/account';
-        $logout_url = $account_url . '?action=logout';
+        //$logout_url = $account_url . '?action=logout';
+        $logout_url = $app_name . 'admin/account?action=logout';
         if (isset($_SESSION['admin'])) :
         ?>
             <a href="<?php echo $logout_url; ?>">Одјави се</a>

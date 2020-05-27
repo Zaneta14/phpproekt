@@ -1,12 +1,12 @@
 <?php include '../../view/header.php'; ?>
 <?php include '../../view/sidebar_admin.php'; ?>
-<main>
+<main class="nofloat">
     <h1>Administrator Accounts</h1>
     <?php if (isset($_SESSION['admin'])) : ?>
     <h2>My Account</h2>
     <p><?php echo $_SESSION['admin']['firstName'] . ' ' .
             $_SESSION['admin']['lastName'] .
-            ' (' . $_SESSION['admin']['emailAddress'] . ')'; ?></p>
+            ' (' . $_SESSION['admin']['adminEmail'] . ')'; ?></p>
     <form action="." method="post">
         <input type="hidden" name="action" value="view_edit">
         <input type="hidden" name="admin_id" 
