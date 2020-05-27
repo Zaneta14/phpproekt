@@ -100,5 +100,10 @@ class CategoryDB {
             display_db_error($error_message);
         }
     }
+    public function productCount($category_id){
+        $db = Database::getDB();
+        $products = ProductDB::getProductsByCategory($category_id);
+        return count($products);
+    }
 }
 ?>

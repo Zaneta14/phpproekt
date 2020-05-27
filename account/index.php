@@ -30,11 +30,11 @@ if ($action == NULL) {
     }
 }
 
-// Set up all possible fields to validate
+
 $validate = new Validate();
 $fields = $validate->getFields();
 
-// for the Registration page and other pages
+
 $fields->addField('email', '');
 $fields->addField('password_1');
 $fields->addField('password_2');

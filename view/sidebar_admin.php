@@ -1,8 +1,5 @@
-
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <aside>
-
-<h3>Категории</h3>
+        <h3>Категории</h3>
     <ul>
         <!-- display links for all categories -->
         <?php
@@ -57,22 +54,26 @@
             </select>
         <input type="submit" value="Филтрирај"/>
     </form>
-    <h4 class="home_button"><a href="<?php echo $app_name ?>">Почетна</a></h4>
-    <?php $account_url=$app_name.'account';
-    $logout_url = $app_name.'/account?action=logout';
-            if (isset($_SESSION['user'])) :
-            ?>
-                <h4 class="home_button"><a href="<?php echo $account_url; ?>">Мој профил</a></h4>
-                <h4 class="home_button"><a href="<?php echo $logout_url; ?>">Одјава</a></h4>
-            <?php else: ?>
-                <h4 class="home_button"><a href="<?php echo $account_url; ?>">Најава</a></h4>
-            <?php endif; ?>
-<?php $cart_url = $app_name.'cart'; ?>
-            <a id='cart' href="<?php echo $cart_url; ?>"><i  class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-
-           
-        <?php $admin_url = $app_name.'admin'; ?>
-            <a href="<?php echo $admin_url; ?>">Администратор</a>
-       
+   
+    
+    <ul>
+        <li>
+        <?php
+      
+        $account_url = '../'. 'admin/account';
+        $logout_url = $account_url . '?action=logout';
+        if (isset($_SESSION['admin'])) :
+        ?>
+            <a href="<?php echo $logout_url; ?>">Одјави се</a>
+        <?php else: ?>
+            <a href="<?php echo $account_url; ?>">Најави се</a>
+        <?php endif; ?>
+        </li>
+        <li>
+            <a href="<?php echo $app_name; ?>">Почетна</a>
+        </li>
+        <li>
+            <a href="<?php echo $app_name; ?>admin">Администратор</a>
+        </li>
+    </ul>
 </aside>
-
