@@ -1,10 +1,11 @@
 <?php 
+require_once('../../model/administrator.php');
+require_once('../../model/administrator_db.php');
 require_once('../../util/main.php');
 require_once('../../util/secure_conn.php');
 require_once('../../model/database.php');
 
-require_once('../../model/administrator.php');
-require_once('../../model/administrator_db.php');
+
 
 require_once('../../model/user.php');
 require_once('../../model/user_db.php');
@@ -74,6 +75,7 @@ switch ($action) {
 
         
         if ($fields->hasErrors()) {
+            $password_message = 'Неуспешно логирање.Погрешен е-маил или лозинка.';
             include 'account_login.php';
             break;
         }
@@ -90,6 +92,9 @@ switch ($action) {
     case 'view_account':
         
         $admins = AdminDB::get_all_admins();
+
+        $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
+        $admin_email = $_SESSION['admin']->getEmail(); 
 
        
         $email = '';

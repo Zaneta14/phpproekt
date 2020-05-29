@@ -1,42 +1,56 @@
 <?php include '../../view/header.php'; ?>
 <?php include '../../view/sidebar_admin.php'; ?>
+
+<?php 
+
+require_once('../../model/database.php');
+require_once('../../model/category.php');
+require_once('../../model/category_db.php');
+require_once('../../model/administrator.php');
+require_once('../../model/administrator_db.php');
+require_once('../../util/main.php');
+require_once('../../model/city.php');
+require_once('../../model/city_db.php');
+require_once('../../model/user.php');
+require_once('../../model/user_db.php');
+
+
+?>
 <main class="nofloat">
-    <h1>Administrator Accounts</h1>
+    <h1>Профили на Администратори</h1>
     <?php if (isset($_SESSION['admin'])) : ?>
-    <h2>My Account</h2>
-    <p><?php echo $_SESSION['admin']['firstName'] . ' ' .
-            $_SESSION['admin']['lastName'] .
-            ' (' . $_SESSION['admin']['adminEmail'] . ')'; ?></p>
+    <h2>Мој профил</h2>
+    <p><?php echo $admin_name. ' (' . $admin_email . ')'; ?></p>
     <form action="." method="post">
         <input type="hidden" name="action" value="view_edit">
         <input type="hidden" name="admin_id" 
-               value="<?php echo $_SESSION['admin']['adminID']; ?>">
-        <input type="submit" value="Edit">
+               value="<?php echo $_SESSION['admin']->getID(); ?>">
+        <input type="submit" value="Промени">
     </form>
     <?php endif; ?>
     <?php if ( count($admins) > 1 ) : ?>
         <h2>Други Администратори</h2>
         <table>
         <?php foreach($admins as $admin):
-            if ($admin['adminID'] != $_SESSION['admin']['adminID']) : ?>
+            if ($admin->getID() != $_SESSION['admin']->getID()) : ?>
             <tr>
-                <td><?php echo $admin['lastName'] . ', ' .
-                           $admin['firstName']; ?>
+                <td><?php echo $admin->getFirstName() . ', ' .
+                           $admin->getLastName(); ?>
                 </td>
                 <td>
-                    <form action="." method="post" class="inline">
+                    <form action="." method="post" >
                         <input type="hidden" name="action"
                             value="view_edit">
                         <input type="hidden" name="admin_id"
-                            value="<?php echo $admin['adminID']; ?>">
-                        <input type="submit" value="Edit">
+                            value="<?php echo $admin->getID(); ?>">
+                        <input type="submit" value="Промени">
                     </form>
-                    <form action="." method="post" class="inline">
+                    <form action="." method="post" >
                         <input type="hidden" name="action"
                             value="view_delete_confirm">
                         <input type="hidden" name="admin_id"
-                            value="<?php echo $admin['adminID']; ?>">
-                        <input type="submit" value="Delete">
+                            value="<?php echo $admin->getID(); ?>">
+                        <input type="submit" value="Избриши">
                     </form>
                 </td>
             </tr>
@@ -44,8 +58,10 @@
         <?php endforeach; ?>
         </table>
     <?php endif; ?>
+    <div >
     <h2>Додади Администратор</h2>
-    <form action="." method="post" id="add_admin_user_form">
+    
+    <form action="." method="post" >
         <input type="hidden" name="action" value="create">
         <label>Email адреса:</label>
         <input type="text" name="email"
@@ -73,7 +89,8 @@
         <?php echo $fields->getField('password_2')->getHTML(); ?><br>
         
         <label>&nbsp;</label>
-        <input type="submit" value="Add Admin User">
+        <input type="submit" value="Додади Администратор">
     </form>
+    </div>
 </main>
 <?php include '../../view/footer.php'; ?>

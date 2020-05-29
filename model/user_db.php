@@ -3,8 +3,7 @@ class UserDB {
 
     function is_valid_user_email($email) {
         $db = Database::getDB();
-        $query = '
-            SELECT userID FROM users
+        $query = 'SELECT userID FROM users
             WHERE userEmail = :email';
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
@@ -17,8 +16,7 @@ class UserDB {
     function is_valid_user_login($email, $password) {
         $db = Database::getDB();
         $password = sha1($email . $password);
-        $query = '
-            SELECT * FROM users
+        $query = 'SELECT * FROM users
             WHERE userEmail = :email AND password = :password';
         $statement = $db->prepare($query);
         $statement->bindValue(':email', $email);
