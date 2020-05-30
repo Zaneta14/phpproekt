@@ -13,6 +13,8 @@
             <tr >
                 <th >Производ</th>
                 <th >Цена</th>
+                <th> Цена на испорака</th>
+                
                 <th >&nbsp;</th>
             </tr>
             <?php foreach ($cart as $product_id => $item) : ?>
@@ -20,6 +22,9 @@
                 <td><?php echo htmlspecialchars($item['name']); ?></td>
                 <td >
                     <?php echo sprintf('%.2f ден.', $item['price']); ?>
+                </td>
+                <td>
+                <?php echo sprintf('%.2f ден.', $item['shipAmount']); ?>
                 </td>
                 <td><form action="." method="get">
                     <input type="hidden" name="action"
@@ -39,6 +44,15 @@
         
             </table>
         </form>
+         
+            <form action="." method="get">
+                    <input type="hidden" name="action"
+                           value="order">
+                    <input type="hidden" name="order_id"
+                           value="null">
+                    <input type="submit" value="Нарачај">
+                </form>
+   
         <?php endif; ?>
 
     <p>Врати се на  <a href="../">Почетна</a></p>
@@ -53,9 +67,5 @@
     <?php endif; ?>
 
     
-    <?php if (cartProductCount() > 0) : ?>
-        <p>
-            Продолжи кон  <a href="../checkout">нарачка</a>
-        </p>
-    <?php endif; ?>
+   
 </main>

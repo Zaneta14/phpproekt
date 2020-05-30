@@ -134,4 +134,5 @@ class Product {
     public function setShipDays($value) {
         $this->shipDays = $value;
     }
+   
 }

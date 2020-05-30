@@ -106,7 +106,7 @@
                    value="<?php echo $product_id; ?>">
             <input type="hidden" name="category_id"
                    value="<?php echo $category_id; ?>">
-            <input type="submit" value="Избиши оглас">
+            <input type="submit" value="Избриши оглас">
         </form>
         <?php endif; ?>
 </main>

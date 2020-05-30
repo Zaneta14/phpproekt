@@ -13,10 +13,11 @@ class OrderDB {
 
         try {
             $statement = $db->prepare($query);
-            $statement->bindValue(':user_id', $customer_id);
+            $statement->bindValue(':user', $user);
             $statement->bindValue(':order_date', $order_date);
             $statement->execute();
             $order_id = $db->lastInsertId();
+            
             $statement->closeCursor();
             return $order_id;
         }catch (PDOException $e) {

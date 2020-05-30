@@ -3,12 +3,13 @@
 <?php
 
 require_once('../model/database.php');
-require_once('../util/main.php');
+
 require_once('../util/validation.php');
 
 
 require_once('../model/category.php');
 require_once('../model/category_db.php');
+
 
 require_once('../model/city.php');
 require_once('../model/city_db.php');
@@ -17,6 +18,10 @@ require_once('../model/user.php');
 require_once('../model/user_db.php');
 require_once('../model/product.php');
 require_once('../model/product_db.php');
+require_once('../model/order.php');
+require_once('../model/order_db.php');
+require_once('../model/orderitem.php');
+require_once('../util/main.php');
 
 include '../view/header.php';
 include '../view/sidebar.php';
@@ -46,6 +51,22 @@ switch ($action){
         $product_id = filter_input(INPUT_GET, 'product_id', FILTER_VALIDATE_INT);
         cartRemoveItem($product_id);
         $cart = getCartItems();
+        break;
+    case 'order':
+        $cart = getCartItems();
+        $user = $_SESSION['user'];
+        $orderDate = date('Y-m-d');
+        $shipDate = strtotime($orderDate . '+ 12 days');
+        $order = new Order($user,$orderDate);
+        OrderDB::addOrder($order);
+        foreach($cart as $item){
+            $orderItem = new OrderItem($order,$item,$shipDate);
+            OrderDB::addOrderItem($orderItem);
+        }
+        clearCart();
+        
+
+
         break;
 default :
     add_error("Unknown cart action: ".$action);

@@ -29,6 +29,8 @@ function getCartItems() {
         $items[$product_id]['name'] = $product->getName();
         $items[$product_id]['description'] = $product->getDescription();
         $items[$product_id]['price'] = $price;
+        $items[$product_id]['shipAmount'] = $product->getShipAmount();
+        $items[$product_id]['shipDays'] = $product->getShipDays();
        
     }
     return $items;
