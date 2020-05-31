@@ -37,7 +37,7 @@ else {
 
 switch ($action) {
     case 'weekly_products':
-        $ids = array(1,2,5);
+        $ids = array(1,38,5);
         $products = array();
         foreach($ids as $id){
             $product = ProductDB::getProduct($id);

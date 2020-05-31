@@ -351,7 +351,7 @@ switch ($action) {
         
         // Check email change and display message if necessary
         if ($email != $old_email) {
-            $email_message = 'You can\'t change the email address for an account.';
+            $email_message = 'Не можете да ја промените email адресата.';
             $email=$old_email;
                 include 'account_edit.php';
                 break;
@@ -366,7 +366,7 @@ switch ($action) {
         // Only validate the passwords if they are NOT empty
         if (!empty($password_1) && !empty($password_2)) {            
             if ($password_1 !== $password_2) {
-                $password_message = 'Passwords do not match.';
+                $password_message = 'Лозинките не се совпаѓаат.';
                 include 'account_edit.php';
                 break;
             }

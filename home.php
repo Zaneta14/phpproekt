@@ -1,17 +1,6 @@
 <?php
-
-            require_once('util/main.php');
-            require_once('model/database.php');
-            require_once('model/category.php');
-            require_once('model/category_db.php');
-            require_once('model/user.php');
-            require_once('model/user_db.php');
-            require_once('model/city.php');
-                    require_once('model/city_db.php');
-                    ?>
-
-<?php include 'view/header.php';?>
-<?php include 'view/sidebar.php'; ?>
+include 'view/header.php';
+include 'view/sidebar.php'; ?>
 
 <main class="nofloat">
 
@@ -35,6 +24,7 @@
             
             $price = $product->getPrice();
             $description = $product->getDescription();
+            $description_with_tags = add_tags($description);
         ?>
             <tr>
                 <td>
@@ -54,8 +44,7 @@
                         <?php echo number_format($price, 2); ?> ден.
                     </p>
                     <p>
-                        <!--<?php echo $first_paragraph; ?>-->
-                        <?php echo htmlspecialchars($description); ?>
+                        <?php echo $description_with_tags; ?>
                     </p>
                     <p>
                     <b>Огласот трае до: </b>

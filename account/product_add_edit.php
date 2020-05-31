@@ -90,12 +90,12 @@
 </div>  
 <?php endif; ?>
 
-    <h2>How to work with the description</h2>
+    <h2>Како да работиш со описот</h2>
         <ul>
-            <li>Use two returns to start a new paragraph.</li>
-            <li>Use an asterisk to mark items in a bulleted list.</li>
-            <li>Use one return between items in a bulleted list.</li>
-            <li>Use standard HMTL tags for bold and italics.</li>
+            <li>За нов параграф, користи два пати enter.</li>
+            <li>Користи ѕвезда (*) за елементи во листа.</li>
+            <li>Помеѓу елементи во листа, користи enter еднаш.</li>
+            <li>За bold и italics користи стандардни HTML тагови.</li>
         </ul>
 
     <?php if ($heading_text == 'Уреди оглас') : ?>
