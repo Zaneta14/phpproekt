@@ -12,6 +12,9 @@ require_once('model/user.php');
 require_once('model/user_db.php');
 require_once('model/city.php');
 require_once('model/city_db.php');
+
+require_once('model/comment.php');
+require_once('model/comment_db.php');
 require_once('util/main.php');
 
 $product_id = filter_input(INPUT_GET,'product_id',FILTER_VALIDATE_INT);
@@ -65,20 +68,11 @@ switch ($action) {
     case 'product' :
         $product = ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
-        $product_code = $product->getCode();
-        $product_name = $product->getName();
-        $description = $product->getDescription();
-        $price = $product->getPrice();
-        $finish_date = substr($product->getFinishDate(),0,10);
-        $start_date = substr($product->getStartDate(),0,10);
-        $image_filename = $product_code . '.jpg';
-        $image_path =  'images/' . $image_filename;
-        $views = $product->getViews();
+        $category=CategoryDB::getCategory($category_id);
         $userID = $product->getUser()->getID();
         $user = UserDB::getUser($userID);
-        $firstName = $user->getFirstName();
-        $lastName = $user->getLastName();
-        $description_with_tags = add_tags($description);
+        $comments=array();
+        $comments=CommentDB::getCommentsByProduct($product_id);
         include('product_view.php');
         break;
     case 'user_filter':
@@ -86,6 +80,46 @@ switch ($action) {
         $user_name=$user->getFirstName().' '.$user->getLastName();
         $products=ProductDB::getProductsByUser($user_id);
         include('home.php');
+        break;
+    case 'post_comment':
+        $product_id=filter_input(INPUT_POST, 'productid');
+        if (isset($_SESSION['user'])) {
+            $comment_user=$_SESSION['user'];
+            $product=ProductDB::getProduct($product_id);
+            $comment_string=filter_input(INPUT_POST, 'comment_text');
+            $comment=new Comment($comment_user, $product, $comment_string);
+            CommentDB::addComment($comment);
+    
+            $userID = $product->getUser()->getID();
+            $user = UserDB::getUser($userID);
+            $category_id = $product->getCategory()->getID();
+            $category=CategoryDB::getCategory($category_id);
+    
+            $comments=array();
+            $comments=CommentDB::getCommentsByProduct($product_id);
+    
+            include('product_view.php');
+            break;
+        }
+        else {
+            header('Location: ' . $app_name . '/account?product_id=' . $product_id);
+        break;
+        }
+    case 'delete_comment':
+        $comment_id=filter_input(INPUT_POST, 'commentid');
+        CommentDB::deleteComment($comment_id);
+
+        $product_id=filter_input(INPUT_POST, 'productid');
+        $product=ProductDB::getProduct($product_id);
+        $userID = $product->getUser()->getID();
+        $user = UserDB::getUser($userID);
+        $category_id = $product->getCategory()->getID();
+        $category=CategoryDB::getCategory($category_id);
+    
+        $comments=array();
+        $comments=CommentDB::getCommentsByProduct($product_id);
+        include('product_view.php');
+
         break;
     default:
         display_error("Unknown action: " . $action);

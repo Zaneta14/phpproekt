@@ -1,10 +1,14 @@
 <?php
 
 require_once('../model/database.php');
-
-
 include '../view/header.php'; 
 include '../view/sidebar.php';
+
+$product_code = $product->getCode();
+$image_filename = $product_code . '.jpg';
+$image_path =  '../images/' . $image_filename;
+$description = $product->getDescription();
+$description_with_tags = add_tags($description);
 
 ?>
 
@@ -41,4 +45,22 @@ include '../view/sidebar.php';
     <p><b>Огласот трае до:</b> &nbsp; <?php echo $product->getFinishDate(); ?></p>
 
 </div>
+
+<h3>Коментари</h3>
+    <?php if (count($comments) > 0 ) : ?>
+            <?php foreach($comments as $comment) :
+            $user_name=$comment->getUser()->getFirstName() . ' ' . $comment->getUser()->getLastName();
+            $comment_string=$comment->getCommentString(); ?>
+
+            <p><b><?php echo $user_name?>:</b> <?php echo $comment_string?>
+            <form action='.' method="post" id="delete_comment_form">
+                <input type="hidden" name="action" value="delete_comment" />
+                <input type="hidden" name="commentid" value="<?php echo $comment->getID(); ?>" />
+                <input type="hidden" name="productid" value="<?php echo $product_id; ?>" />
+                <input type="submit" value="Избриши">
+            </form>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <p>Нема коментари.</p>
+    <?php endif; ?>
 <?php include '../view/footer.php'; ?>

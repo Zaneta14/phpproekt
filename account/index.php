@@ -11,6 +11,9 @@ require_once('../model/order.php');
 require_once('../model/orderitem.php');
 require_once('../model/category.php');
 require_once('../model/category_db.php');
+
+require_once('../model/comment.php');
+require_once('../model/comment_db.php');
 require_once('../model/city_db.php');
 require_once('../model/city.php');
 
@@ -19,7 +22,10 @@ require_once('../model/validate.php');
 require_once('../util/main.php');
 require_once('../util/images.php');
 
+
 $action = filter_input(INPUT_POST, 'action');
+$product_id=filter_input(INPUT_GET, 'product_id');
+
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL) {        
@@ -57,6 +63,8 @@ switch ($action) {
         $telNumber='';
         $address= '';
         $email_message1='';
+
+        $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 
         include 'account_register.php';
         break;
@@ -109,8 +117,11 @@ switch ($action) {
         // Store user data in session
         $_SESSION['user'] = UserDB::getUser($user_id);
         
-        // Redirect to the Checkout application if necessary
-        if (isset($_SESSION['checkout'])) {
+        $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+        if (isset($product_id)) {
+            header('Location: ' . $app_name . '?product_id=' . $product_id);
+        
+        } elseif (isset($_SESSION['checkout'])) {
             unset($_SESSION['checkout']);
             redirect('../checkout');
         } else {
@@ -122,6 +133,7 @@ switch ($action) {
         $email = '';
         $password = '';
         $password_message = '';
+
         
         include 'account_login_register.php';
         break;
@@ -148,9 +160,13 @@ switch ($action) {
             break;
         }
 
+        $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
         // If necessary, redirect to the Checkout app
         // Redirect to the Checkout application
-        if (isset($_SESSION['checkout'])) {
+        if (isset($product_id)) {
+            header('Location: ' . $app_name . '?product_id=' . $product_id);
+        }
+        elseif (isset($_SESSION['checkout'])) {
             unset($_SESSION['checkout']);
             redirect('../checkout');
         } else {
@@ -204,11 +220,9 @@ switch ($action) {
         $product=ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
         $category_name = $product->getCategory()->getName();
-        $product_code = $product->getCode();
-        $product_description = $product->getDescription();
-        $image_filename = $product_code . '.jpg';
-        $image_path =  '../images/' . $image_filename;
-        $description_with_tags = add_tags($product_description);
+        
+        $comments=array();
+        $comments=CommentDB::getCommentsByProduct($product_id);
 
         include 'account_view_product.php';
         break;
@@ -415,6 +429,22 @@ switch ($action) {
         $product_description='';
         
         include 'account_view.php';
+        break;
+
+    case 'delete_comment':
+        $comment_id=filter_input(INPUT_POST, 'commentid');
+        CommentDB::deleteComment($comment_id);
+    
+        $product_id=filter_input(INPUT_POST, 'productid');
+        $product=ProductDB::getProduct($product_id);
+        $userID = $product->getUser()->getID();
+        $user = UserDB::getUser($userID);
+        $category_id = $product->getCategory()->getID();
+        $category_name = $product->getCategory()->getName();
+        $category=CategoryDB::getCategory($category_id);
+        $comments=array();
+        $comments=CommentDB::getCommentsByProduct($product_id);
+        include('account_view_product.php');
         break;
 
     case 'logout':

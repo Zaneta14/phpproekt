@@ -12,10 +12,12 @@
 
 <main class="nofloat"> 
     <h1>Најавa</h1>
-
+    
     <form action="." method="post" id="login_form">
         <input type="hidden" name="action" value="login">
-        
+        <?php if (isset($product_id)) : ?>
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+        <?php endif; ?>
         <div id="left_columnL">
         <label>Email адреса:</label>
         <br><br>
@@ -41,6 +43,9 @@
     <h1>Регистрација</h1>
     <form action="." method="post">
         <input type="hidden" name="action" value="view_register">
+        <?php if (isset($product_id)) : ?>
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+        <?php endif; ?>
         <input  id="login_reg_button" type="submit" value="Регистрирај се">
     </form>
 </main>

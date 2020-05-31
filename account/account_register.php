@@ -16,6 +16,10 @@ if (!isset($password_message)) { $password_message = ''; }
     <h1>Регистрација</h1>
     <form action="." method="post" id="register_form">
         <input type="hidden" name="action" value="register">
+        <?php if (isset($product_id)) : ?>
+        <h2><?php echo $product_id; ?></h2>
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+        <?php endif; ?>
 
         <label>Email адреса:</label>
         <input type="text" name="email"
