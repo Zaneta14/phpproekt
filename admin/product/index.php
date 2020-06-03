@@ -42,9 +42,23 @@ switch ($action) {
         }
         $current_category = CategoryDB::getCategory($category_id);
         $categories = CategoryDB::getCategories();
-        $products = ProductDB::getProductsByCategory($category_id);
+        // $products = ProductDB::getProductsByCategory($category_id);
 
         include('product_list.php');
+        break;
+        case 'view_product_admin':
+
+            // $category_id = filter_input(INPUT_POST, 'category_id', 
+            // FILTER_VALIDATE_INT);
+             $product_id = filter_input(INPUT_POST, 'product_id', 
+            FILTER_VALIDATE_INT);
+            $product = ProductDB::getProduct($product_id);
+            $category_id = $product->getCategory()->getID();
+            $category=CategoryDB::getCategory($category_id);
+            $userID = $product->getUser()->getID();
+            $user = UserDB::getUser($userID);
+            include('product_view_admin.php');
+
         break;
         case 'delete_product':
             $category_id = filter_input(INPUT_POST, 'category_id', 

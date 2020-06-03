@@ -1,11 +1,13 @@
 <?php include '../../view/header.php'; ?>
 <?php include '../../view/sidebar_admin.php'; ?>
 
-<main>
+<main class="nofloat">
     <h1>Прегледај корисник</h1>
     
     
-    <?php include '../../account/account_view.php'; ?>
+    <p><?php echo $user_name . ' (' . $email . ')'; ?></p>
+    <p><?php echo $address; ?></p>
+    <p><?php echo $telNumber; ?></p>
 
     
     <br>
@@ -18,7 +20,7 @@
                    value="<?php echo $user->getID(); ?>">
             <input type="hidden" name="city_id"
                    value="<?php echo $user->getID(); ?>">
-            <input type="submit" value="Delete User">
+            <input type="submit" value="Избриши Корисник">
         </form>
         
     </div>

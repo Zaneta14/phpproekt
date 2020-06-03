@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../util/main.php');
+
 require_once('../../util/secure_conn.php');
 require_once('../../model/database.php');
 
@@ -23,6 +23,7 @@ require_once('../../model/fields.php');
 require_once('../../model/validate.php');
 
 require_once('../../util/images.php');
+require_once('../../util/main.php');
 
 $action = strtolower(filter_input(INPUT_POST, 'action'));
 if ($action == NULL) {
@@ -35,13 +36,30 @@ if ($action == NULL) {
 switch ($action) {
     case 'list_users':
         $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
+       
+        if (empty($city_id)) {
+            $city_id = 1;
+        }
+
         $current_city = CityDB::getCity($city_id);
         $cities = CityDB::getCities();
-        $users = UserDB::getUsersByCity($city_id);
+        // $users = UserDB::getUsersByCity($city_id);
 
         include('user_list.php');
         break;
-        case 'delete_product':
+        case 'view_user':
+            $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
+            $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
+            
+            $user = UserDB::getUser($user_id);
+            $user_name = $user->getFirstName()." ".$user->getLastName();
+            $email = $user->getEmail();
+            $address = $user->getUserAddress();
+            $telNumber = $user->getTelNumber();
+            include('user_view.php');
+
+        break;
+        case 'delete_user':
             $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
         
             $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);

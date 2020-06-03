@@ -7,6 +7,8 @@
     require_once('../model/category.php');
     require_once('../model/city_db.php');
     require_once('../model/city.php');
+    require_once('../model/user.php');
+    require_once('../model/user_db.php');
     include ('../view/header.php');
     include ('../view/sidebar_admin.php');
 ?>

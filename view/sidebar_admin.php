@@ -1,7 +1,7 @@
 <aside>
-        <h3>Категории</h3>
+        <!-- <h3>Категории</h3>
     <ul>
-        <!-- display links for all categories -->
+        display links for all categories
         <?php
             /*require_once('model/database.php');
             require_once('model/category.php');
@@ -53,7 +53,7 @@
                         <?php endforeach; ?>
             </select>
         <input type="submit" value="Филтрирај"/>
-    </form>
+    </form> -->
    
     
     <ul>
@@ -71,9 +71,9 @@
            
         <?php endif; ?>
         </li>
-        <!-- <li>
+        <li>
             <a href="<?php echo $app_name; ?>">Почетна</a>
-        </li> -->
+        </li>
         <li>
         <?php $admin_url = $app_name.'admin'; ?>
             <a href="<?php echo $admin_url; ?>">Админ Мени</a>
