@@ -65,11 +65,11 @@ class AdminDB {
             $row = $statement->fetch();
             $statement->closeCursor();
 
-            $admin = new Administrator($row['adminEmail'],
-            $row['password'],
-            $row['firstName'],
-            $row['lastName']);
-            $admin->setID($row['adminID']);
+            $admin = new Administrator($row['adminEmail'] ?? 'dv',
+            $row['password'] ?? 'dv',
+            $row['firstName'] ?? 'dv',
+            $row['lastName'] ?? 'dv');
+            $admin->setID($row['adminID'] ?? 'dv');
 
             return $admin;
 

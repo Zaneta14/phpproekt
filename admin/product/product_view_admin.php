@@ -60,11 +60,7 @@ $description_with_tags = add_tags($description);
 
     <p><b>Објавено од: </b>
     <a href="<?php echo $app_name?>?user_id=<?php echo $userID ?>"> &nbsp; <?php echo $user->getFirstName(); ?> &nbsp; <?php echo $user->getLastName(); ?> </a></p>
-</div>
 
-    
-
-    
     <br>
     <div id="edit_and_delete_buttons">
      
@@ -79,6 +75,12 @@ $description_with_tags = add_tags($description);
         </form>
         
     </div>
+</div>
+
+    
+
+    
+  
     
 </main>
 <?php include '../../view/footer.php'; ?>

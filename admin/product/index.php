@@ -50,10 +50,9 @@ switch ($action) {
 
             // $category_id = filter_input(INPUT_POST, 'category_id', 
             // FILTER_VALIDATE_INT);
-             $product_id = filter_input(INPUT_POST, 'product_id', 
-            FILTER_VALIDATE_INT);
+            $product_id = filter_input(INPUT_GET, 'product_id',FILTER_VALIDATE_INT);
             $product = ProductDB::getProduct($product_id);
-            $category_id = $product->getCategory()->getID();
+            $category_id = filter_input(INPUT_GET, 'category_id',FILTER_VALIDATE_INT);
             $category=CategoryDB::getCategory($category_id);
             $userID = $product->getUser()->getID();
             $user = UserDB::getUser($userID);

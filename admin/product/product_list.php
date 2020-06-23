@@ -16,7 +16,7 @@
             <?php foreach ($products as $product) : ?>
             <p>
                 <a href="?action=view_product_admin&amp;product_id=<?php
-                          echo $product->getID(); ?>">
+                          echo $product->getID(); ?>&amp;category_id=<?php echo $product->getCategory()->getID()?>">
                     <?php echo htmlspecialchars($product->getName()); ?>
                 </a>
             </p>

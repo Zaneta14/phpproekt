@@ -28,6 +28,13 @@ require_once('../../model/user_db.php');
         <input type="submit" value="Промени">
     </form>
     <?php endif; ?>
+    <br>
+    <hr style="border-width: 1px 1px 0;
+           border-style: solid;
+           border-color: #e3e3e3; 
+           
+           margin-left: auto;
+           margin-right: auto;">
     <?php if ( count($admins) > 1 ) : ?>
         <h2>Други Администратори</h2>
         <table>
@@ -59,37 +66,55 @@ require_once('../../model/user_db.php');
         </table>
     <?php endif; ?>
     <div >
+    <br>
+    <hr style="border-width: 1px 1px 0;
+           border-style: solid;
+           border-color: #e3e3e3; 
+           
+           margin-left: auto;
+           margin-right: auto;">
     <h2>Додади Администратор</h2>
+
+   
     
     <form action="." method="post" >
-        <input type="hidden" name="action" value="create">
-        <label>Email адреса:</label>
-        <input type="text" name="email"
+    <div id = "left_column">
+    <input type="hidden" name="action" value="create">
+        <label>Email адреса:</label><br><br>
+
+        <label>Име:</label><br><br>
+
+        <label>Презиме:</label><br><br>
+
+        <label>Лозинка:</label><br><br>
+
+        <label>Потврди лозинка:</label><br><br>
+    </div>
+
+    <div id = "right_column">
+    <input type="text" name="email"
                value="<?php echo htmlspecialchars($email); ?>">
         <span class="error"><?php echo $email_message; ?></span>
-        <?php echo $fields->getField('email')->getHTML(); ?><br>
-        
-        <label>Име:</label>
+        <?php echo $fields->getField('email')->getHTML(); ?><br><br>
+
         <input type="text" name="first_name"
                value="<?php echo htmlspecialchars($first_name); ?>">
-        <?php echo $fields->getField('first_name')->getHTML(); ?><br>
-        
-        <label>Презиме:</label>
+        <?php echo $fields->getField('first_name')->getHTML(); ?><br><br>
+
         <input type="text" name="last_name"
                value="<?php echo htmlspecialchars($last_name); ?>">
-        <?php echo $fields->getField('last_name')->getHTML(); ?><br>
-        
-        <label>Лозинка:</label>
+        <?php echo $fields->getField('last_name')->getHTML(); ?><br><br>
+
         <input type="password" name="password_1">
         <span><?php echo htmlspecialchars($password_message); ?></span>
-        <?php echo $fields->getField('password_1')->getHTML(); ?><br>
-        
-        <label>Потврди лозинка:</label>
+        <?php echo $fields->getField('password_1')->getHTML(); ?><br><br>
+
         <input type="password" name="password_2">
-        <?php echo $fields->getField('password_2')->getHTML(); ?><br>
-        
+        <?php echo $fields->getField('password_2')->getHTML(); ?><br><br>
         <label>&nbsp;</label>
-        <input type="submit" value="Додади Администратор">
+        <input type="submit" value="Додади">
+    
+    </div>
     </form>
     </div>
 </main>

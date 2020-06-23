@@ -92,9 +92,15 @@ switch ($action) {
     case 'view_account':
         
         $admins = AdminDB::get_all_admins();
+        $admin_id = $_SESSION['admin']->getID();
 
-        $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
-        $admin_email = $_SESSION['admin']->getEmail(); 
+        $admin = AdminDB::get_admin($admin_id);
+        $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
+        $admin_email = $admin->getEmail();
+
+
+        // $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
+        // $admin_email = $_SESSION['admin']->getEmail(); 
 
        
         $email = '';
@@ -106,7 +112,7 @@ switch ($action) {
         if (!isset($password_message)) { 
             $password_message = '';             
         }
-        include 'account_view.php';
+        include ("account_view.php");
         break;
 
         case 'create':

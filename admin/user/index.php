@@ -65,6 +65,8 @@ switch ($action) {
             $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
             UserDB::deleteUser($user_id);
 
+            redirect($app_path . 'user/index.php');
+
             header("Location: .?city_id=$city_id");
             break;
 

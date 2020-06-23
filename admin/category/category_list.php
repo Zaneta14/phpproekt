@@ -3,6 +3,8 @@
 <main class="nofloat">
 
     <h1>Менаџер на категории</h1>
+
+    <p>*Пожелно е да не се бришат категории што содржат производи</p>
     <table id="category_table">
         <?php foreach ($categories as $category) : ?>
         <tr>
@@ -15,17 +17,24 @@
                 <input type="hidden" name="action" value="update_category">
                 <input type="hidden" name="category_id"
                        value="<?php echo $category->getID(); ?>">
-                <input type="submit" value="Update">
+                <input type="submit" value="Промени">
             </td>
             </form>
             <td>
-            <?php if (CategoryDB::productCount($category->getID()) == 0) : ?>
+            
                 <form action="." method="post" >
                     <input type="hidden" name="action" value="delete_category">
                     <input type="hidden" name="category_id"
                            value="<?php echo $category->getID(); ?>">
-                    <input type="submit" value="Delete">
+                    <input type="submit" value="Избриши">
                 </form>
+                
+            </td>
+            <td>
+            <?php if (CategoryDB::productCount($category->getID()) != 0) : ?>
+                <p style="color:gray;font-size:14px;">Има производи</p>
+                <?php else :?>
+                <p style="color:gray;font-size:14px;">Празна</p>
                 <?php endif; ?>
             </td>
         </tr>
@@ -36,7 +45,7 @@
     <form action="." method="post" id="add_category_form" >
         <input type="hidden" name="action" value="add_category">
         <input type="text" name="name">
-        <input type="submit" value="Add">
+        <input type="submit" value="Додади">
     </form>
 
 </main>

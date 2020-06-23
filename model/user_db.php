@@ -122,7 +122,7 @@ class UserDB {
         }
     }
 
-    public static function deleteUser($user_id) {
+    public function deleteUser($user_id) {
         $db = Database::getDB();
         $query = 'DELETE FROM users
                   WHERE userID = :user_id';
