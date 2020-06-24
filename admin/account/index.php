@@ -175,7 +175,7 @@ switch ($action) {
             include 'account_edit.php';
             break;
 
-            case 'update':
+        case 'update':
         $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
         $email = filter_input(INPUT_POST, 'email');
         $first_name = filter_input(INPUT_POST, 'first_name');
@@ -188,25 +188,26 @@ switch ($action) {
         $validate->text('first_name', $first_name);
         $validate->text('last_name', $last_name);        
         $validate->text('password_1', $password_1, false, 6, 30);
-        $validate->text('password_2', $password_2, false, 6, 30);     
+        $validate->text('password_2', $password_2, false, 6, 30);  
+        $password_message = " ";   
         
         
         if ($fields->hasErrors()) {
-            include 'admin/account/account_edit.php';
+            include 'account_edit.php';
             break;
         }
         
         if ($password_1 !== $password_2) {
-            $password_message = 'Passwords do not match.';
-            include 'admin/account/account_edit.php';
+            $password_message = 'Лозинките не одговараат';
+            include 'account_edit.php';
             break;
         }
         
         AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
                 $password_1, $password_2);
        
-        if ($admin_id == $_SESSION['admin']['adminID']) {
-            $_SESSION['admin'] = get_admin($admin_id);
+        if ($admin_id == $_SESSION['admin']->getID()) {
+            $_SESSION['admin'] = AdminDB::get_admin($admin_id);
         }
         redirect($app_name . 'admin/account/.?action=view_account');
         break;
@@ -227,13 +228,13 @@ switch ($action) {
             
             
             if ($fields->hasErrors()) {
-                include 'admin/account/account_edit.php';
+                include 'account_edit.php';
                 break;
             }
             
             if ($password_1 !== $password_2) {
                 $password_message = 'Лозинките не одговараат.';
-                include 'admin/account/account_edit.php';
+                include 'account_edit.php';
                 break;
             }
             

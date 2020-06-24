@@ -65,11 +65,11 @@ class AdminDB {
             $row = $statement->fetch();
             $statement->closeCursor();
 
-            $admin = new Administrator($row['adminEmail'] ?? 'dv',
-            $row['password'] ?? 'dv',
-            $row['firstName'] ?? 'dv',
-            $row['lastName'] ?? 'dv');
-            $admin->setID($row['adminID'] ?? 'dv');
+            $admin = new Administrator($row['adminEmail'] ?? 'null',
+            $row['password'] ?? 'null',
+            $row['firstName'] ?? 'null',
+            $row['lastName'] ?? 'null');
+            $admin->setID($row['adminID'] ?? 'null');
 
             return $admin;
 
@@ -152,12 +152,13 @@ class AdminDB {
         
     }
 
-    function update_admin($admin_id, $admin, $password_1, $password_2) {
+    function update_admin($admin_id, $email,$first_name, $last_name, $password_1, $password_2) {
         $db = Database::getDB();
 
-        $email = $admin->getEmail();
-        $first_name = $admin->getFirstName();
-        $last_name = $admin->getLastName();
+        // $admin = Database::get_admin($admin_id);
+        // // $email = $admin->getEmail();
+        // $first_name = $admin->getFirstName();
+        // $last_name = $admin->getLastName();
 
 
         $query = 'UPDATE administrators SET adminEmail = :email,
