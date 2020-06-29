@@ -3,6 +3,7 @@ require_once('../../model/administrator.php');
 require_once('../../model/administrator_db.php');
 require_once('../../util/main.php');
 require_once('../../util/secure_conn.php');
+
 require_once('../../model/database.php');
 
 
@@ -90,17 +91,16 @@ switch ($action) {
         redirect('.');
         break;
     case 'view_account':
-        
         $admins = AdminDB::get_all_admins();
         $admin_id = $_SESSION['admin']->getID();
 
         $admin = AdminDB::get_admin($admin_id);
-        $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
-        $admin_email = $admin->getEmail();
+        // $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
+        // $admin_email = $admin->getEmail();
 
 
-        // $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
-        // $admin_email = $_SESSION['admin']->getEmail(); 
+        $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
+        $admin_email = $_SESSION['admin']->getEmail(); 
 
        
         $email = '';
@@ -241,26 +241,26 @@ switch ($action) {
             AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
                     $password_1, $password_2);
            
-            if ($admin_id == $_SESSION['admin']['adminID']) {
+            if ($admin_id == $_SESSION['admin']->getID()) {
                 $_SESSION['admin'] = get_admin($admin_id);
             }
             redirect($app_name . 'admin/account/.?action=view_account');
             break;
             case 'view_delete_confirm':
                 $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
-                if ($admin_id == $_SESSION['admin']['adminID']) {
+                if ($admin_id == $_SESSION['admin']->getID()) {
                     display_error('Не можете да ја избришете вашата корисничка сметка.');
                 }
-                $admin = get_admin($admin_id);
-                $first_name = $admin['firstName'];
-                $last_name = $admin['lastName'];
-                $email = $admin['emailAddress'];
+                $admin = AdminDB::get_admin($admin_id);
+                $first_name = $admin->getFirstName();
+                $last_name = $admin->getLastName();
+                $email = $admin->getEmail();
                 include 'account_delete.php';
                 break;
 
                 case 'delete':
                     $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
-                    delete_admin($admin_id);
+                    AdminDB::delete_admin($admin_id);
                     redirect($app_name . 'admin/account');
                     break;
                 case 'logout':

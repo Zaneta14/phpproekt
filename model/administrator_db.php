@@ -120,12 +120,12 @@ class AdminDB {
         return $valid;
     }
 
-    function add_admin($admin, $password_1) {
+    function add_admin($email,$first_name, $last_name, $password_1) {
         $db = Database::getDB();
         $password = sha1($email . $password_1);
-        $email=$admin->getEmail();
-        $first_name=$admin->getFirstName();
-        $last_name=$admin->getLastName();
+        // $email=$admin->getEmail();
+        // $first_name=$admin->getFirstName();
+        // $last_name=$admin->getLastName();
 
 
         $query = 'INSERT INTO administrators (adminEmail, password, firstName, lastName)

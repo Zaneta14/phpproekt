@@ -1,4 +1,6 @@
 <?php
+
+
 class Database {
 
     private static $dsn = 'mysql:host=remotemysql.com;dbname=YYwPpXym72';

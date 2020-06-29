@@ -24,10 +24,10 @@ require_once('../../model/administrator_db.php');
         <input type="hidden" name="action" value="delete">
         <input type="hidden" name="admin_id"
                value="<?php echo $admin_id; ?>">
-        <input type="submit" value="Delete Account">
+        <input type="submit" value="Избриши Профил">
     </form>
     <form action="." method="post">
-        <input type="submit" value="Cancel">
+        <input type="submit" value="Откажи">
     </form>
 </main>
 <?php include '../../view/footer.php'; ?>
