@@ -53,21 +53,26 @@ switch ($action){
         $cart = getCartItems();
         break;
     case 'order':
-        $cart = getCartItems();
-        $user = $_SESSION['user'];
-        $orderDate = date('Y-m-d');
-        $shipDate = strtotime($orderDate . '+ 12 days');
-        $order = new Order($user,$orderDate);
-        OrderDB::addOrder($order);
-        foreach($cart as $item){
-            $orderItem = new OrderItem($order,$item,$shipDate);
-            OrderDB::addOrderItem($orderItem);
-        }
-        clearCart();
-        
-
-
+        $product_id=filter_input(INPUT_POST, 'productid');
+        if(isset($_SESSION['user'])){
+            $cart = getCartItems();
+            $user = $_SESSION['user'];
+            $orderDate = date('Y-m-d');
+            $shipDate = strtotime($orderDate . '+ 12 days');
+            $order = new Order($user,$orderDate);
+            OrderDB::addOrder($order);
+            foreach($cart as $item){
+                $orderItem = new OrderItem($order,$item,$shipDate);
+                OrderDB::addOrderItem($orderItem);
+            }
+            clearCart();
+            include('cart_order_complete.php');
+            break;
+        }else{
+            header('Location: ' . $app_name . '/account?product_id=' . $product_id);
         break;
+        }
+    
 default :
     add_error("Unknown cart action: ".$action);
     break;

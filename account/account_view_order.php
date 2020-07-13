@@ -7,19 +7,19 @@
 
     <table id="cart">
         <tr id="cart_header">
-            <th class="left">Производ</th>
-            <th class="right">Цена</th>
-            <th class="right">Цена на достава</th>
-            <th class="right">Ден на достава</th>
-            <th class="right">Вкупно</th>
+            <th >Производ</th>
+            <th >Цена</th>
+            <th >Цена на достава</th>
+            <th >Ден на достава</th>
+            <th >Вкупно</th>
         </tr>
     <?php
         $subtotal = 0;
         foreach ($order_items as $item) :
-            $item_id = $item->getProduct()->getID();
-            $item_name=$item->getProduct()->getName();
-            $item_price=$item->getProduct()->getPrice();
-            $item_ship_amount=$item->getProduct()->getShipAmount();
+            $item_id = $item->getID();
+            $item_name=$item->getName();
+            $item_price=$item->getPrice();
+            $item_ship_amount=$item->getShipAmount();
             $item_ship_date=$item->getShipDate();
 
             $line_total = $item_price + $item_ship_amount;
@@ -27,23 +27,23 @@
             ?>
             <tr>
                 <td><?php echo htmlspecialchars($item_name); ?></td>
-                <td class="right">
+                <td >
                     <?php echo $item_price. ' ден.'; ?>
                 </td>
-                <td class="right">
+                <td >
                     <?php echo $item_ship_amount.' ден.'; ?>
                 </td>
-                <td class="right">
+                <td >
                     <?php echo substr($item_ship_date, 0, 10); ?>
                 </td>
-                <td class="right">
+                <td >
                     <?php echo $line_total . ' ден.'; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
         <tr id="cart_footer">
-            <td colspan="5" class="right">Севкупно:</td>
-            <td class="right">
+            <td colspan="5" >Севкупно:</td>
+            <td >
                 <?php echo $subtotal.' ден.'; ?>
             </td>
         </tr>
