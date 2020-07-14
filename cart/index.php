@@ -58,10 +58,11 @@ switch ($action){
             $cart = getCartItems();
             $user = $_SESSION['user'];
             $orderDate = date('Y-m-d');
-            $shipDate = strtotime($orderDate . '+ 12 days');
             $order = new Order($user,$orderDate);
             OrderDB::addOrder($order);
             foreach($cart as $item){
+                $shipDays=$item['shipDays'];
+                $shipDate=date('Y-m-d', strtotime($orderDate. ' + ' . $shipDays . ' days'));
                 $orderItem = new OrderItem($order,$item,$shipDate);
                 OrderDB::addOrderItem($orderItem);
             }

@@ -17,9 +17,9 @@
         $subtotal = 0;
         foreach ($order_items as $item) :
             $item_id = $item->getID();
-            $item_name=$item->getName();
-            $item_price=$item->getPrice();
-            $item_ship_amount=$item->getShipAmount();
+            $item_name=$item->getProduct()->getName();
+            $item_price=$item->getProduct()->getPrice();
+            $item_ship_amount=$item->getProduct()->getShipAmount();
             $item_ship_date=$item->getShipDate();
 
             $line_total = $item_price + $item_ship_amount;

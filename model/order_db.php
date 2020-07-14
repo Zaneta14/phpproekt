@@ -30,7 +30,7 @@ class OrderDB {
         $db = Database::getDB();
 
         $order_id=$order_item->getID();
-        $product_id=$order_item->getID();
+        $product_id=$order_item->getOrder()->getID();
 
         $query = '
             INSERT INTO orderItems (orderID, productID)
