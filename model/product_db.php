@@ -263,5 +263,28 @@ class ProductDB {
             display_db_error($error_message);
         }
     }
+
+    public function updateProductViews($product) {
+        $db = Database::getDB();
+
+        $product_id = $product->getID();
+        $views = $product->getViews();
+        $views+=1;
+
+        $query = 'UPDATE products
+                    SET 
+                    productViews=:views
+                    WHERE productID = :product_id';
+        try {
+            $statement = $db->prepare($query);
+            $statement->bindValue(':product_id', $product_id);
+            $statement->bindValue(':views', $views);
+            $statement->execute();
+            $statement->closeCursor();
+        }catch (PDOException $e) {
+            $error_message = $e->getMessage();
+            display_db_error($error_message);
+        }
+    }
 }
 ?>

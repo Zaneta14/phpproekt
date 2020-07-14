@@ -73,6 +73,7 @@ switch ($action) {
         $user = UserDB::getUser($userID);
         $comments=array();
         $comments=CommentDB::getCommentsByProduct($product_id);
+        ProductDB::updateProductViews($product);
         include('product_view.php');
         break;
     case 'user_filter':

@@ -1,7 +1,8 @@
 <?php
 class Product {
-    private $id, $category, $user, $views, $name, $description, 
+    private $id, $category, $user, $name, $description, 
     $code, $price, $startDate, $finishDate, $shipAmount, $shipDays;
+    private $views;
 
     public function __construct($category, $user, $views, $name,
     $description, $code, $price, $startDate, 
