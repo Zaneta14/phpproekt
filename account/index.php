@@ -1,6 +1,13 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once('../vendor/autoload.php');
+
 require_once('../util/secure_conn.php');
 require_once('../model/database.php');
+
 
 require_once('../model/user.php');
 require_once('../model/user_db.php');
@@ -118,6 +125,52 @@ switch ($action) {
         $_SESSION['user'] = UserDB::getUser($user_id);
         
         $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+
+        //mail
+        $mail = new PHPMailer(true);
+
+        //Enable SMTP debugging.
+        //$mail->SMTPDebug = 3;                               
+        //Set PHPMailer to use SMTP.
+        $mail->isSMTP();            
+        //Set SMTP host name                          
+        $mail->Host = "smtp.gmail.com";
+        //Set this to true if SMTP host requires authentication to send email
+        $mail->SMTPAuth = true;                          
+        //Provide username and password     
+        $mail->Username = "sellandbuy987@gmail.com";                 
+        $mail->Password = "SellAndBuy123";                           
+        //If SMTP requires TLS encryption then set it
+        $mail->SMTPSecure = "tls";                           
+        //Set TCP port to connect to
+        $mail->Port = 587;            
+        
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        
+        $mail->From = "sellandbuy987@gmail.com";
+        $mail->FromName = "Sell And buy";
+        
+        $mail->addAddress($email);
+        
+        $mail->isHTML(false);
+        
+        $mail->Subject = "SellAndBuy registration";
+        $mail->Body = "Честитки, успешно се регистриравте на web страната на SellAndBuy.\nВи посакуваме пријатно користење на нашите услуги.";
+        
+        try {
+            $mail->send();
+            echo "Message has been sent successfully";
+        } catch (Exception $e) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        }
+        
+
         if (isset($product_id)) {
             header('Location: ' . $app_name . '?product_id=' . $product_id);
         
@@ -133,7 +186,6 @@ switch ($action) {
         $email = '';
         $password = '';
         $password_message = '';
-
         
         include 'account_login_register.php';
         break;
