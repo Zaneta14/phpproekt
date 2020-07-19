@@ -1,3 +1,4 @@
+
 <?php include '../view/header.php'; ?>
 <?php include '../view/sidebar.php'; ?>
 <main class="nofloat">
@@ -11,7 +12,9 @@
     }
     ?>
     <h1><?php echo $heading_text; ?></h1>
+        
     <form action="." method="post" id="add_product_form">
+    
         <?php if (isset($product_id)) : ?>
             <input type="hidden" name="action" value="update_product">
             <input type="hidden" name="product_id"
@@ -24,8 +27,40 @@
 
         <p><?php echo $error_message ?></p>
 
-        <label>Категорија:</label>
-        <select name="category_id">
+
+<div id = "left_column" >
+<label>Категорија:</label>
+
+<br><br>
+
+<label>Име:</label>
+
+<br><br>
+
+<label>Код:</label>
+<br><br>
+
+<label>Цена:</label>
+<br><br>
+
+<label>Траење на оглас: </label>
+<br><br>
+
+<label>Цена на достава:</label>
+<br><br>
+
+<label>Време на достава:</label>
+<br><br>
+
+<label>Опис:</label>
+<br><br>
+
+
+
+
+</div>
+<div id = "right_column" >
+<select name="category_id">
         <?php foreach ($categories as $category) : 
             if ($category->getID() == $category_id) {
                 $selected = 'selected';
@@ -39,43 +74,43 @@
             </option>
         <?php endforeach; ?>
         </select>
-        <br>
+        <br><br>
 
-        <label>Име:</label>
         <input type="text" name="name" 
                value="<?php echo htmlspecialchars($product->getName()); ?>" 
                size="50">
-        <br>
+        <br><br>
 
-        <label>Код:</label>
         <input type="text" name="code"
                value="<?php echo htmlspecialchars($product->getCode()); ?>">
-        <br>
+        <br><br>
 
-        <label>Цена:</label>
         <input type="text" name="price"
                value="<?php echo htmlspecialchars($product->getPrice()); ?>">
-        <br>
+        <br><br>
 
-        <label>Цена на достава:</label>
+        <input type="text" name="finishDate"
+               value=""><span style="font-size:9px">гггг-мм-дд (Празно поле означува + 30 дена на моменталниот датум)</span> 
+               <br><br>
+
         <input type="text" name="amount"
                value="<?php echo htmlspecialchars($product->getShipAmount()); ?>"> ден.
-        <br>
+        <br><br>
 
-        <label>Време на достава:</label>
         <input type="text" name="days"
                value="<?php echo htmlspecialchars($product->getShipDays()); ?>"> дена
-        <br>
+        <br><br>
 
-        <label>Опис:</label>
         <textarea name="description" rows="10"
                   cols="65"><?php echo $product->getDescription(); ?></textarea>
-        <br>
+        <br><br>
 
         <label>&nbsp;</label>
-        <input type="submit" value="Submit">
-        
-    </form>
+        <input type="submit" value="Зачувај">
+        <br><br>
+
+</div>
+</form>
 
     <?php if ($heading_text == 'Уреди оглас') : ?>
     <div id="image_manager">
@@ -85,12 +120,12 @@
             <input type="file" name="file1"><br>
             <input type="hidden" name="product_id"
                    value="<?php echo $product_id; ?>">
-            <input type="submit" value="Upload Image">
+            <input type="submit" value="Постави слика">
         </form>
 </div>  
 <?php endif; ?>
 
-    <h2>Како да работиш со описот</h2>
+    <h2>Работа со описот</h2>
         <ul>
             <li>За нов параграф, користи два пати enter.</li>
             <li>Користи ѕвезда (*) за елементи во листа.</li>
@@ -111,3 +146,6 @@
         <?php endif; ?>
 </main>
 <?php include '../view/footer.php'; ?>
+
+  
+

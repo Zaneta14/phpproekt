@@ -1,6 +1,8 @@
 <?php
 include 'view/header.php';
-include 'view/sidebar.php'; ?>
+include 'view/sidebar.php'; 
+
+?>
 
 <main class="nofloat">
 
@@ -46,10 +48,11 @@ include 'view/sidebar.php'; ?>
                     <p>
                         <?php echo $description_with_tags; ?>
                     </p>
-                    <p>
-                    <b>Огласот трае до: </b>
-                    <?php echo htmlspecialchars(substr($product->getFinishDate(),0,10)); ?>
-                    </p>
+                    <?php if(strtotime($product->getFinishDate()) > time()): ?>
+                    <p><b>Огласот трае до:</b> &nbsp; <?php echo substr($product->getFinishDate(), 0, 10); ?></p>
+                    <?php else: ?>
+                    <p><b>Огласот не е активен</p>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

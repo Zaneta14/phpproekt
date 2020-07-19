@@ -24,7 +24,7 @@ $description_with_tags = add_tags($description);
             <input type="hidden" name="action" value="show_add_edit_form">
             <input type="hidden" name="product_id"
                    value="<?php echo $product_id; ?>">
-            <input type="hidden" name="category_id"
+            <input type="hidden" name="category_id" 
                    value="<?php echo $category_id; ?>">
             <input type="submit" value="Уреди оглас">
         </form>
@@ -32,7 +32,7 @@ $description_with_tags = add_tags($description);
     <p><b>Категорија:</b> &nbsp; <?php echo $category_name; ?></p>
 
     <p><b>Цена:</b>
-        <?php echo number_format($product->getPrice(), 2); ?> ден.</p>
+    <?php echo number_format($product->getPrice(), 2); ?> ден.</p>
     <p><b>Цена на достава:</b> &nbsp; <?php echo $product->getShipAmount(); ?> ден.</p>
     <p><b>Време на достава:</b> &nbsp; <?php echo $product->getShipDays(); ?> дена</p>
     

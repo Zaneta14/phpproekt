@@ -12,6 +12,7 @@ $image_path =  'images/' . $image_filename;
 $description = $product->getDescription();
 $description_with_tags = add_tags($description);
 
+
 ?>
 
 
@@ -25,7 +26,7 @@ $description_with_tags = add_tags($description);
 
     <p><b>Цена:</b>
         <?php echo number_format($product->getPrice(), 2); ?> ден.</p>
-
+        <?php if(strtotime($product->getFinishDate()) > time()): ?>
         <form action="<?php echo $app_name . 'cart' ?>" method="get" 
           id="add_to_cart_form">
         <input type="hidden" name="action" value="add" />
@@ -34,13 +35,19 @@ $description_with_tags = add_tags($description);
        
         <input type="submit" value="Стави во кошничка" />
     </form>
+    <?php else: ?>
+    <p><b>Огласот не е активен</p>
+<?php endif; ?>
     
     <?php echo $description_with_tags; ?>
     <p><b>Објавено нa:</b> &nbsp; <?php echo substr($product->getStartDate(), 0, 10); ?></p>
 
     <p><b>Број на прегледи:</b> &nbsp; <?php echo $product->getViews(); ?></p>
-
+    <?php if(strtotime($product->getFinishDate()) > time()): ?>
     <p><b>Огласот трае до:</b> &nbsp; <?php echo substr($product->getFinishDate(), 0, 10); ?></p>
+<?php else: ?>
+    <p><b>Огласот бил активен до:</b> &nbsp; <?php echo substr($product->getFinishDate(), 0, 10); ?></p>
+<?php endif; ?>
 
     <p><b>Објавено од: </b>
     <a href="<?php echo $app_name?>?user_id=<?php echo $userID ?>"> &nbsp; <?php echo $user->getFirstName(); ?> &nbsp; <?php echo $user->getLastName(); ?> </a></p>
