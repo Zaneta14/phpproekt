@@ -24,21 +24,23 @@ class OrderDB {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
+        return $order_id;
     }
 
-    function addOrderItem($order_item) {
+    function addOrderItem($order_id,$product_id,$shipDate) {
         $db = Database::getDB();
 
-        $order_id=$order_item->getID();
-        $product_id=$order_item->getOrder()->getID();
+        // $order_id=$order_item->getID();
+        // $product_id=$order_item->getOrder()->getID();
 
         $query = '
-            INSERT INTO orderItems (orderID, productID)
-            VALUES (:order_id, :product_id)';
+            INSERT INTO orderItems (orderID, productID, shipDate)
+            VALUES (:order_id, :product_id, :shipDate)';
         $statement = $db->prepare($query);
         try {
             $statement->bindValue(':order_id', $order_id);
             $statement->bindValue(':product_id', $product_id);
+            $statement->bindValue(':shipDate', $shipDate);
             $statement->execute();
             $statement->closeCursor();
         }catch (PDOException $e) {

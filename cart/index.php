@@ -53,19 +53,20 @@ switch ($action){
         $cart = getCartItems();
         break;
     case 'order':
-        $product_id=filter_input(INPUT_POST, 'product_id');
+        // $product_id=filter_input(INPUT_POST, 'product_id');
         $category_id = filter_input(INPUT_POST,'category_id');
+
         if(isset($_SESSION['user'])){
             $cart = getCartItems();
             $user = $_SESSION['user'];
-            $orderDate = date('Y-m-d');
+            $orderDate = date('Y-m-d H:i:s');
             $order = new Order($user,$orderDate);
-            OrderDB::addOrder($order);
-            foreach($cart as $item){
+            $order_id = OrderDB::addOrder($order);
+            foreach($cart as $product_id => $item){
                 $shipDays=$item['shipDays'];
-                $shipDate=date('Y-m-d', strtotime($orderDate. ' + ' . $shipDays . ' days'));
-                $orderItem = new OrderItem($order,$item,$shipDate);
-                OrderDB::addOrderItem($orderItem);
+                $shipDate=date('Y-m-d H:i:s', strtotime($orderDate. ' + ' . $shipDays . ' days'));
+                // $orderItem = new OrderItem($order,$item,$shipDate);
+                OrderDB::addOrderItem($order_id,$product_id,$shipDate);
             }
             clearCart();
             include('cart_order_complete.php');

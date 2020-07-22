@@ -27,7 +27,7 @@
             <?php foreach($orders as $order) :
                 $order_id = $order->getID();
                 $order_date = strtotime($order->getOrderDate());
-                $order_date = date('M j, Y', $order_date);
+                $order_date = date('M j, Y H:i:s', $order_date);
                 $url = $app_name . 'account' .
                        '?action=view_order&order_id=' . $order_id;
                 ?>

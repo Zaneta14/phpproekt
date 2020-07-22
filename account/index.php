@@ -249,7 +249,7 @@ switch ($action) {
         $order_id = filter_input(INPUT_GET, 'order_id', FILTER_VALIDATE_INT);
         $order = OrderDB::getOrder($order_id);
         $order_date = strtotime($order->getOrderDate());
-        $order_date = date('M j, Y', $order_date);
+        $order_date = date('M j, Y H:i:s', $order_date);
         $order_items = OrderDB::getOrderItems($order_id);
         
         include 'account_view_order.php';
