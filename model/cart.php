@@ -8,7 +8,7 @@ function cartAddItem($product_id) {
     $product = ProductDB::getProduct($product_id);
     $_SESSION['cart'][$product_id] = $product_id;
     
-    $_SESSION['last_category_id'] = $product->getID();
+    $_SESSION['last_category_id'] = $product->getCategory()->getID();
     $_SESSION['last_category_name'] = $product->getCategory()->getName();
 }
 

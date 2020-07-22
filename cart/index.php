@@ -54,6 +54,7 @@ switch ($action){
         break;
     case 'order':
         $product_id=filter_input(INPUT_POST, 'productid');
+        $category_id = filter_input(INPUT_POST,'category_id');
         if(isset($_SESSION['user'])){
             $cart = getCartItems();
             $user = $_SESSION['user'];

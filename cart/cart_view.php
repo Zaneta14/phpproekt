@@ -50,6 +50,8 @@
                            value="order">
                     <input type="hidden" name="order_id"
                            value="null">
+                    <input type="hidden" name="product_id"
+                           value="null">
                     <input type="submit" value="Нарачај">
                 </form>
    
