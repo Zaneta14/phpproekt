@@ -92,17 +92,19 @@ switch ($action) {
         break;
     case 'view_account':
         $admins = AdminDB::get_all_admins();
-        $admin_id = $_SESSION['admin']->getID();
-
-        $admin = AdminDB::get_admin($admin_id);
+        //$admin_id = $_SESSION['admin']->getID();
+        //$admin = AdminDB::get_admin($admin_id);
+        //$admin = $_SESSION['admin'];
         // $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
         // $admin_email = $admin->getEmail();
 
+        if (isset($_SESSION['admin'])) {
+            
+         $admin = $_SESSION['admin'];
+         $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
+         $admin_email = $admin->getEmail();
+        }
 
-        $admin_name = $_SESSION['admin']->getFirstName() . ' ' . $_SESSION['admin']->getLastName();
-        $admin_email = $_SESSION['admin']->getEmail(); 
-
-       
         $email = '';
         $first_name = '';
         $last_name = '';

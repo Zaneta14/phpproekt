@@ -25,5 +25,6 @@
         
     </div>
     
+<a href="../user">Назад</a>
 </main>
 <?php include '../../view/footer.php'; ?>

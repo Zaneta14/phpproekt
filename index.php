@@ -37,7 +37,7 @@ else {
 
 switch ($action) {
     case 'weekly_products':
-        $ids = array(1,38,5);
+        $ids = array(39,40, 38);
         $products = array();
         foreach($ids as $id){
             $product = ProductDB::getProduct($id);
@@ -69,6 +69,7 @@ switch ($action) {
         $product = ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
         $category=CategoryDB::getCategory($category_id);
+        $category_name=$category->getName();
         $userID = $product->getUser()->getID();
         $user = UserDB::getUser($userID);
         $comments=array();
@@ -95,6 +96,7 @@ switch ($action) {
             $user = UserDB::getUser($userID);
             $category_id = $product->getCategory()->getID();
             $category=CategoryDB::getCategory($category_id);
+            $category_name=$category->getName();
     
             $comments=array();
             $comments=CommentDB::getCommentsByProduct($product_id);
@@ -116,6 +118,7 @@ switch ($action) {
         $user = UserDB::getUser($userID);
         $category_id = $product->getCategory()->getID();
         $category=CategoryDB::getCategory($category_id);
+        $category_name=$category->getName();
     
         $comments=array();
         $comments=CommentDB::getCommentsByProduct($product_id);

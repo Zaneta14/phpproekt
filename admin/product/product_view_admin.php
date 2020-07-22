@@ -80,7 +80,9 @@ $description_with_tags = add_tags($description);
     
 
     
+<a href="../product">Назад</a>
   
     
 </main>
+
 <?php include '../../view/footer.php'; ?>

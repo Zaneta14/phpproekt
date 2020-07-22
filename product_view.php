@@ -22,7 +22,7 @@ $description_with_tags = add_tags($description);
 </div>
 
 <div id="right_column">
-    <p><b>Категорија: </b><?php echo $category->getName(); ?></p>
+    <p><b>Категорија: </b><?php echo $category_name; ?></p>
 
     <p><b>Цена:</b>
         <?php echo number_format($product->getPrice(), 2); ?> ден.</p>
@@ -36,10 +36,11 @@ $description_with_tags = add_tags($description);
         <input type="submit" value="Стави во кошничка" />
     </form>
     <?php else: ?>
-    <p><b>Огласот не е активен</p>
+    <p style="color:red"><b>Огласот не е активен</p>
 <?php endif; ?>
     
-    <?php echo $description_with_tags; ?>
+    <p>
+    <?php echo $description_with_tags; ?></p>
     <p><b>Објавено нa:</b> &nbsp; <?php echo substr($product->getStartDate(), 0, 10); ?></p>
 
     <p><b>Број на прегледи:</b> &nbsp; <?php echo $product->getViews(); ?></p>

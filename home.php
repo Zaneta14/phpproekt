@@ -51,7 +51,7 @@ include 'view/sidebar.php';
                     <?php if(strtotime($product->getFinishDate()) > time()): ?>
                     <p><b>Огласот трае до:</b> &nbsp; <?php echo substr($product->getFinishDate(), 0, 10); ?></p>
                     <?php else: ?>
-                    <p><b>Огласот не е активен</p>
+                    <p style="color:red"><b>Огласот не е активен</p>
                     <?php endif; ?>
                 </td>
             </tr>

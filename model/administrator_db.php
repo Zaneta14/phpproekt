@@ -80,7 +80,7 @@ class AdminDB {
         
     }
 
-    function get_admin_by_email ($email) {
+    function get_admin_by_email($email) {
         $db = Database::getDB();
         $query = 'SELECT * FROM administrators
                  WHERE adminEmail = :email';
