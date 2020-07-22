@@ -45,13 +45,13 @@
             </table>
         </form>
          
-            <form action="." method="get">
+            <form action="." method="post">
                     <input type="hidden" name="action"
                            value="order">
                     <input type="hidden" name="order_id"
                            value="null">
                     <input type="hidden" name="product_id"
-                           value="null">
+                           value="<?php echo $product_id; ?>">
                     <input type="submit" value="Нарачај">
                 </form>
    
