@@ -7,7 +7,7 @@ $uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
 $dirs = explode('/', $uri);
 $app_path = '/' . $dirs[1] . '/' . $dirs[2] . '/';
 
-$app_name='/phpproekt/';
+$app_name='/phpproekt14/';
 
 // Set the include path
 set_include_path($doc_root . $app_path);

@@ -18,6 +18,7 @@ require_once('../model/order.php');
 require_once('../model/orderitem.php');
 require_once('../model/category.php');
 require_once('../model/category_db.php');
+require_once('../model/cart.php');
 
 require_once('../model/comment.php');
 require_once('../model/comment_db.php');
@@ -71,6 +72,7 @@ switch ($action) {
         $address= '';
         $email_message1='';
 
+        //za komentiranje
         $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 
         include 'account_register.php';
@@ -170,16 +172,16 @@ switch ($action) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         }
         
-
-        if (isset($product_id)) {
+        //za komentiranje
+        if(isset($product_id)) {
             header('Location: ' . $app_name . '?product_id=' . $product_id);
-        
-        } elseif (isset($_SESSION['checkout'])) {
-            unset($_SESSION['checkout']);
-            redirect('../checkout');
-        } else {
+        }
+        elseif ($_SESSION['cart']!=array()) {
+            header('Location: ' . $app_name . '/cart');
+        }
+        else {
             redirect('.');
-        }        
+        }       
         break;
     case 'view_login':
         // Clear login data
@@ -213,17 +215,17 @@ switch ($action) {
         }
 
         $product_id=filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
-        // If necessary, redirect to the Checkout app
-        // Redirect to the Checkout application
-        if (isset($product_id)) {
+
+        //za komentiranje
+        if(isset($product_id)) {
             header('Location: ' . $app_name . '?product_id=' . $product_id);
         }
-        elseif (isset($_SESSION['checkout'])) {
-            unset($_SESSION['checkout']);
-            redirect('../checkout');
-        } else {
+        elseif ($_SESSION['cart']!=array()) {
+            header('Location: ' . $app_name . '/cart');
+        }
+        else {
             redirect('.');
-        }        
+        }    
         break;
     case 'view_account':
         $user_name = $_SESSION['user']->getFirstName() . ' ' . $_SESSION['user']->getLastName();
@@ -301,10 +303,6 @@ switch ($action) {
         $product_ship_days = filter_input(INPUT_POST, 'days', FILTER_VALIDATE_INT);
         $product_ship_amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_INT);
         $product_start_date=date("Y-m-d H:i:s"); 
-        
-        
-        
-      
         $product_views=0;
         $description_with_tags = add_tags($product_description);
 
@@ -520,6 +518,7 @@ switch ($action) {
 
     case 'logout':
         unset($_SESSION['user']);
+        clearCart();
         redirect('..');
         break;
     default:

@@ -72,7 +72,7 @@ switch ($action){
             include('cart_order_complete.php');
             break;
         }else{
-            header('Location: ' . $app_name . '/account?product_id=' . $product_id);
+            header('Location: ' . $app_name . '/account');
         break;
         }
     

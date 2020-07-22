@@ -80,9 +80,10 @@ $description_with_tags = add_tags($description);
         <form action="." method="post" id="add_comment_form">
             <input type="hidden" name="action" value="post_comment" />
             <input type="hidden" name="productid" value="<?php echo $product_id; ?>" />
-            <textarea name="comment_text" rows="3"
-                    cols="55" placeholder="Додади коментар..."></textarea>
-            <input type="submit" value="Коментирај">
+                <textarea name="comment_text" rows="3"
+                cols="55" placeholder="Додади коментар..."></textarea>
+        <input type="submit" value="Коментирај">
+            
         </form>
 
 <?php include 'view/footer.php'; ?>
