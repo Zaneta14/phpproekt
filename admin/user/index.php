@@ -60,9 +60,9 @@ switch ($action) {
 
         break;
         case 'delete_user':
-            $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
+            $city_id = filter_input(INPUT_POST,'city_id',FILTER_VALIDATE_INT);
         
-            $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
+            $user_id = filter_input(INPUT_POST,'user_id',FILTER_VALIDATE_INT);
             UserDB::deleteUser($user_id);
 
             redirect($app_path . 'user/index.php');
