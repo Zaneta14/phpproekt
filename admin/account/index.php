@@ -76,7 +76,7 @@ switch ($action) {
 
         
         if ($fields->hasErrors()) {
-            $password_message = 'Неуспешно логирање.Погрешен е-маил или лозинка.';
+            $password_message = 'Неуспешно логирање. Погрешен е-маил или лозинка.';
             include 'account_login.php';
             break;
         }
@@ -84,7 +84,7 @@ switch ($action) {
         if (AdminDB::is_valid_admin_login($email, $password)) {
             $_SESSION['admin'] = AdminDB::get_admin_by_email($email);
         } else {
-            $password_message = 'Неуспешно логирање.Погрешен е-маил или лозинка.';
+            $password_message = 'Неуспешно логирање. Погрешен е-маил или лозинка.';
             include 'account_login.php';
             break;
         }
@@ -92,19 +92,8 @@ switch ($action) {
         break;
     case 'view_account':
         $admins = AdminDB::get_all_admins();
-        //$admin_id = $_SESSION['admin']->getID();
-        //$admin = AdminDB::get_admin($admin_id);
-        //$admin = $_SESSION['admin'];
-        // $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
-        // $admin_email = $admin->getEmail();
-
-        if (isset($_SESSION['admin'])) {
-            
          $admin = $_SESSION['admin'];
-         $admin_name = $admin->getFirstName() . ' ' . $admin->getLastName();
-         $admin_email = $admin->getEmail();
-        }
-
+         
         $email = '';
         $first_name = '';
         $last_name = '';
@@ -126,6 +115,7 @@ switch ($action) {
             $password_2 = filter_input(INPUT_POST, 'password_2');
     
             $admins = AdminDB::get_all_admins();
+            $admin=$_SESSION['admin'];
             $email_message = '';             
             $password_message = '';             
     
@@ -136,14 +126,13 @@ switch ($action) {
             $validate->text('password_1', $password_1, true, 6, 30);
             $validate->text('password_2', $password_2, true, 6, 30);     
             
-           
             if ($fields->hasErrors()) {
                 include 'account_view.php';
                 break;
             }
             
             if (AdminDB::is_valid_admin_email($email)) {
-                $email_message = 'Веќе искористен е-маил.';
+                $email_mess = 'Веќе искористен е-маил.';
                 include 'account_view.php';
                 break;
             }
@@ -153,8 +142,8 @@ switch ($action) {
                 include 'account_view.php';
                 break;
             }
-            $admin_id = AdminDB::add_admin($email, $first_name, $last_name,
-                                 $password_1);
+            $admin=new Administrator($email, $password_1, $first_name, $last_name);
+            $admin_id = AdminDB::add_admin($admin);
 
         
         if (!isset($_SESSION['admin'])) {
@@ -185,6 +174,8 @@ switch ($action) {
         $password_1 = filter_input(INPUT_POST, 'password_1');
         $password_2 = filter_input(INPUT_POST, 'password_2');
         
+        $old_admin = AdminDB::get_admin($admin_id);
+        $old_password=$old_admin->getPassword();
         
         $validate->email('email', $email);
         $validate->text('first_name', $first_name);
@@ -205,7 +196,8 @@ switch ($action) {
             break;
         }
         
-        AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
+        $admin=new Administrator($email, $old_password, $first_name, $last_name);
+        AdminDB::update_admin($admin_id, $admin, 
                 $password_1, $password_2);
        
         if ($admin_id == $_SESSION['admin']->getID()) {
@@ -213,42 +205,8 @@ switch ($action) {
         }
         redirect($app_name . 'admin/account/.?action=view_account');
         break;
-    
-        case 'update':
-            $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
-            $email = filter_input(INPUT_POST, 'email');
-            $first_name = filter_input(INPUT_POST, 'first_name');
-            $last_name = filter_input(INPUT_POST, 'last_name');
-            $password_1 = filter_input(INPUT_POST, 'password_1');
-            $password_2 = filter_input(INPUT_POST, 'password_2');
-            
-            $validate->email('email', $email);
-            $validate->text('first_name', $first_name);
-            $validate->text('last_name', $last_name);        
-            $validate->text('password_1', $password_1, false, 6, 30);
-            $validate->text('password_2', $password_2, false, 6, 30);     
-            
-            
-            if ($fields->hasErrors()) {
-                include 'account_edit.php';
-                break;
-            }
-            
-            if ($password_1 !== $password_2) {
-                $password_message = 'Лозинките не одговараат.';
-                include 'account_edit.php';
-                break;
-            }
-            
-            AdminDB::update_admin($admin_id, $email, $first_name, $last_name, 
-                    $password_1, $password_2);
-           
-            if ($admin_id == $_SESSION['admin']->getID()) {
-                $_SESSION['admin'] = get_admin($admin_id);
-            }
-            redirect($app_name . 'admin/account/.?action=view_account');
-            break;
-            case 'view_delete_confirm':
+
+        case 'view_delete_confirm':
                 $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
                 if ($admin_id == $_SESSION['admin']->getID()) {
                     display_error('Не можете да ја избришете вашата корисничка сметка.');
@@ -260,18 +218,18 @@ switch ($action) {
                 include 'account_delete.php';
                 break;
 
-                case 'delete':
+        case 'delete':
                     $admin_id = filter_input(INPUT_POST, 'admin_id', FILTER_VALIDATE_INT);
                     AdminDB::delete_admin($admin_id);
                     redirect($app_name . 'admin/account');
                     break;
-                case 'logout':
+        case 'logout':
                     unset($_SESSION['admin']);
                     redirect($app_name . 'admin');
                     break;
-                default:
+        default:
                     display_error('Unknown account action: ' . $action);
                     break;
 
-                }
+        }
 ?>

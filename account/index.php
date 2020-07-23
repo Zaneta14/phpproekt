@@ -366,8 +366,6 @@ switch ($action) {
                 $product_finish_date = $product_finish;
             }
             
-
-
             $product_obj=new Product($category, $user, $product_views, $product_name, $product_description, $product_code, 
             $product_price, $product_start_date, $product_finish_date, $product_ship_amount, $product_ship_days);
             $product_obj->setID($product_id);

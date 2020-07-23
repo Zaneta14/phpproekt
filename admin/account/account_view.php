@@ -24,7 +24,7 @@ require_once('../../util/main.php');
     <h1>Профили на Администратори</h1>
     <?php if (isset($_SESSION['admin'])) : ?>
     <h2>Мој профил</h2>
-    <p><?php echo $admin_name. ' (' . $admin_email . ')'; ?></p>
+    <p><?php echo $admin->getFirstName() . ' ' . $admin->getLastName() . ' (' . $admin->getEmail() . ')'; ?></p>
     <form action="." method="post">
         <input type="hidden" name="action" value="view_edit">
         <input type="hidden" name="admin_id" 
@@ -98,7 +98,7 @@ require_once('../../util/main.php');
     <div id = "right_column">
     <input type="text" name="email"
                value="<?php echo htmlspecialchars($email); ?>">
-        <span class="error"><?php echo $email_message; ?></span>
+        <span class="error"><?php if (isset($email_mess)) echo $email_mess; ?></span>
         <?php echo $fields->getField('email')->getHTML(); ?><br><br>
 
         <input type="text" name="first_name"

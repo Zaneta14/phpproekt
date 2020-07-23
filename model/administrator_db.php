@@ -87,9 +87,9 @@ class AdminDB {
 
         try{
             $statement = $db->prepare($query);
-            $statement->bindValue(':email', $email);
+            $statement->bindValue(":email", $email);
             $statement->execute();
-            $admin = $statement->fetch();
+            $row = $statement->fetch();
             $statement->closeCursor();
 
             $admin = new Administrator($row['adminEmail'],
@@ -120,13 +120,14 @@ class AdminDB {
         return $valid;
     }
 
-    function add_admin($email,$first_name, $last_name, $password_1) {
+    function add_admin($admin) {
         $db = Database::getDB();
+        
+        $email=$admin->getEmail();
+        $first_name=$admin->getFirstName();
+        $last_name=$admin->getLastName();
+        $password=$admin->getPassword();
         $password = sha1($email . $password_1);
-        // $email=$admin->getEmail();
-        // $first_name=$admin->getFirstName();
-        // $last_name=$admin->getLastName();
-
 
         $query = 'INSERT INTO administrators (adminEmail, password, firstName, lastName)
             VALUES (:email, :password, :first_name, :last_name)';
@@ -152,13 +153,12 @@ class AdminDB {
         
     }
 
-    function update_admin($admin_id, $email,$first_name, $last_name, $password_1, $password_2) {
+    function update_admin($admin_id, $admin, $password_1, $password_2) {
         $db = Database::getDB();
 
-        // $admin = Database::get_admin($admin_id);
-        // // $email = $admin->getEmail();
-        // $first_name = $admin->getFirstName();
-        // $last_name = $admin->getLastName();
+        $email = $admin->getEmail();
+        $first_name = $admin->getFirstName();
+        $last_name = $admin->getLastName();
 
 
         $query = 'UPDATE administrators SET adminEmail = :email,
