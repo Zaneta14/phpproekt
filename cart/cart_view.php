@@ -1,20 +1,16 @@
-
-    <h1>
+<h1>
     Вашата кошничка
-    </h1>
+</h1>
 
-    <?php if (cartProductCount() == 0) : ?>
-        <p>Немате производи во кошничката</p>
-    <?php else: ?>
-
-        <form action="." method="get">
-            
-            <table >
-            <tr >
+<?php if (cartProductCount() == 0) : ?>
+    <p>Немате производи во кошничката</p>
+<?php else: ?>
+    <form action="." method="get">
+        <table>
+            <tr>
                 <th >Производ</th>
                 <th >Цена</th>
                 <th> Цена на испорака</th>
-                
                 <th >&nbsp;</th>
             </tr>
             <?php foreach ($cart as $product_id => $item) : ?>
@@ -42,32 +38,25 @@
                 </td>
             </tr>
         
-            </table>
-        </form>
-         
-            <form action="." method="post">
-                    <input type="hidden" name="action"
-                           value="order">
-                    <input type="hidden" name="order_id"
-                           value="null">
-                    <input type="hidden" name="product_id"
-                           value="<?php echo $product_id; ?>">
-                    <input type="submit" value="Нарачај">
-                </form>
-   
-        <?php endif; ?>
-
-    <p>Врати се на  <a href="../">Почетна</a></p>
-
+        </table>
+    </form>
     
-    <?php if (isset($_SESSION['last_category_id'])) :
-            $category_url = '../' .
-                '?category_id=' . $_SESSION['last_category_id'];
+    <form action="." method="post">
+            <input type="hidden" name="action" value="order">
+            <input type="hidden" name="order_id" value="null">
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+            <input type="submit" value="Нарачај">
+    </form>
+   
+ <?php endif; ?>
+
+<p>Врати се на  <a href="../">Почетна</a></p>
+
+<?php if (isset($_SESSION['last_category_id'])) :
+        $category_url = '../' . '?category_id=' . $_SESSION['last_category_id'];
         ?>
-        <p>Врати се на  <a href="<?php echo $category_url; ?>">
-            <?php echo $_SESSION['last_category_name']; ?></a></p>
-    <?php endif; ?>
-
-    
-   
+    <p>Врати се на  <a href="<?php echo $category_url; ?>">
+    <?php echo $_SESSION['last_category_name']; ?></a></p>
+<?php endif; ?>
+ 
 </main>

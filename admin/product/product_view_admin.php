@@ -5,39 +5,36 @@
     <h1>Прегледај производ</h1>
     
 <?php
+    require_once('../../util/secure_conn.php');
+    require_once('../../model/database.php');
 
-require_once('../../util/secure_conn.php');
-require_once('../../model/database.php');
+    require_once('../../model/administrator.php');
+    require_once('../../model/administrator_db.php');
 
-require_once('../../model/administrator.php');
-require_once('../../model/administrator_db.php');
+    require_once('../../model/user.php');
+    require_once('../../model/user_db.php');
+    require_once('../../model/product.php');
+    require_once('../../model/product_db.php');
+    require_once('../../model/order_db.php');
+    require_once('../../model/order.php');
+    require_once('../../model/orderitem.php');
+    require_once('../../model/category.php');
+    require_once('../../model/category_db.php');
+    require_once('../../model/city_db.php');
+    require_once('../../model/city.php');
 
-require_once('../../model/user.php');
-require_once('../../model/user_db.php');
-require_once('../../model/product.php');
-require_once('../../model/product_db.php');
-require_once('../../model/order_db.php');
-require_once('../../model/order.php');
-require_once('../../model/orderitem.php');
-require_once('../../model/category.php');
-require_once('../../model/category_db.php');
-require_once('../../model/city_db.php');
-require_once('../../model/city.php');
+    require_once('../../model/fields.php');
+    require_once('../../model/validate.php');
 
-require_once('../../model/fields.php');
-require_once('../../model/validate.php');
+    require_once('../../util/images.php');
+    require_once('../../util/main.php');
 
-require_once('../../util/images.php');
-require_once('../../util/main.php');
-
-$product_code = $product->getCode();
-$image_filename = $product_code . '.jpg';
-$image_path =  '../../images/' . $image_filename;
-$description = $product->getDescription();
-$description_with_tags = add_tags($description);
-
+    $product_code = $product->getCode();
+    $image_filename = $product_code . '.jpg';
+    $image_path =  '../../images/' . $image_filename;
+    $description = $product->getDescription();
+    $description_with_tags = add_tags($description);
 ?>
-
 
 <h1><?php echo htmlspecialchars($product->getName()); ?></h1>
 <div id="left_column">
@@ -63,8 +60,6 @@ $description_with_tags = add_tags($description);
 
     <br>
     <div id="edit_and_delete_buttons">
-     
-        
         <form action="." method="post" id="delete_button_form" >
             <input type="hidden" name="action" value="delete_product">
             <input type="hidden" name="product_id"
@@ -73,16 +68,9 @@ $description_with_tags = add_tags($description);
                    value="<?php echo $product->getID(); ?>">
             <input type="submit" value="Избриши Производ">
         </form>
-        
     </div>
 </div>
-
-    
-
-    
 <a href="../product">Назад</a>
-  
-    
 </main>
 
 <?php include '../../view/footer.php'; ?>

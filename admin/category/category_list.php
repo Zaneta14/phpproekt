@@ -21,7 +21,6 @@
             </td>
             </form>
             <td>
-            
                 <form action="." method="post" >
                     <input type="hidden" name="action" value="delete_category">
                     <input type="hidden" name="category_id"

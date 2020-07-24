@@ -105,3 +105,6 @@ a:hover{
 .nofloat {
     float: none;
 }
+.error {
+    color: red;
+}

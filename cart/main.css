@@ -1,5 +1,4 @@
 main{
-  
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: bold;
     float: left;
@@ -85,10 +84,6 @@ a:hover{
     text-decoration: none;
     color: rgb(2, 49, 2);
 }
-/* a :checked{
-    background-color: rgb(219, 253, 208);
-    text-decoration: none;
-} */
 
 #left_column {
     float: left;
@@ -102,4 +97,7 @@ a:hover{
 }
 .nofloat {
     float: none;
+}
+.error {
+    color: red;
 }

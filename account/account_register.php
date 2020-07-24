@@ -1,10 +1,10 @@
 <?php
-            require_once('../model/database.php');
-            require_once('../model/category.php');
-            require_once('../model/category_db.php');
-            require_once('../util/main.php');
-            require_once('../model/city.php');
-            require_once('../model/city_db.php');
+    require_once('../model/database.php');
+    require_once('../model/category.php');
+    require_once('../model/category_db.php');
+    require_once('../util/main.php');
+    require_once('../model/city.php');
+    require_once('../model/city_db.php');
 ?>
 
 <?php include '../view/header.php'; ?>
@@ -14,14 +14,8 @@ if (!isset($password_message)) { $password_message = ''; }
 ?>
 <main class="nofloat">
     <h1>Регистрација</h1>
-
-    
-
     <form action="." method="post" id="register_form">
-
-    
         <div id = "left_column">
-
         <input type="hidden" name="action" value="register">
         <?php if (isset($product_id)) : ?>
         <h2><?php echo $product_id; ?></h2>
@@ -72,10 +66,6 @@ if (!isset($password_message)) { $password_message = ''; }
         <select name="city">
                 <option value="">Избери</option>
                 <?php 
-                    /*require_once('model/database.php');
-                    require_once('model/city.php');
-                    require_once('model/city_db.php');*/
-
                     $cities = CityDB::getCities();
                         foreach($cities as $city) :
                             $name = $city->getName();
@@ -99,8 +89,6 @@ if (!isset($password_message)) { $password_message = ''; }
         <?php echo $fields->getField('tel_number')->getHTML(); ?><br><br>
 
         <input type="submit" value="Регистрирај се">
-
-
     </div>
     </form>
 </main>

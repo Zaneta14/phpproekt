@@ -59,19 +59,6 @@ class Validate {
         }
     }
 
-    public function phone($name, $value, $required = false) {
-        $field = $this->fields->getField($name);
-
-        // Call the text method and exit if it yields an error
-        $this->text($name, $value, $required);
-        if ($field->hasError()) { return; }
-
-        // Call the pattern method to validate a phone number
-        $pattern = '/^[[:digit:]]{3}-[[:digit:]]{3}-[[:digit:]]{4}$/';
-        $message = 'Invalid phone number.';
-        $this->pattern($name, $value, $pattern, $message, $required);
-    }
-
     public function email($name, $value, $required = true) {
         $field = $this->fields->getField($name);
 

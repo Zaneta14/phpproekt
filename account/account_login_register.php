@@ -1,10 +1,10 @@
 <?php
-            require_once('../model/database.php');
-            require_once('../model/category.php');
-            require_once('../model/category_db.php');
-            require_once('../util/main.php');
-            require_once('../model/city.php');
-            require_once('../model/city_db.php');
+    require_once('../model/database.php');
+    require_once('../model/category.php');
+    require_once('../model/category_db.php');
+    require_once('../util/main.php');
+    require_once('../model/city.php');
+    require_once('../model/city_db.php');
 ?>
 
 <?php include '../view/header.php'; ?>
@@ -35,9 +35,6 @@
         <span class="error"><?php echo htmlspecialchars($password_message); ?></span>
         <?php endif; ?>
         </div>
-
-
-     
     </form>
 <br><br>
     <h1>Регистрација</h1>

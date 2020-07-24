@@ -11,8 +11,6 @@ $image_filename = $product_code . '.jpg';
 $image_path =  'images/' . $image_filename;
 $description = $product->getDescription();
 $description_with_tags = add_tags($description);
-
-
 ?>
 
 

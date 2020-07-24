@@ -1,14 +1,15 @@
 <?php
-            require_once('../model/database.php');
-            require_once('../model/category.php');
-            require_once('../model/category_db.php');
-            require_once('../util/main.php');
-            require_once('../model/city.php');
-            require_once('../model/city_db.php');
+    require_once('../model/database.php');
+    require_once('../model/category.php');
+    require_once('../model/category_db.php');
+    require_once('../util/main.php');
+    require_once('../model/city.php');
+    require_once('../model/city_db.php');
 ?>
 
 <?php include '../view/header.php'; ?>
 <?php include '../view/sidebar.php'; ?>
+
 <main class="nofloat">
     <h1>Уреди профил</h1>
     <div id="edit_account_form">
@@ -21,7 +22,6 @@
         <?php echo $fields->getField('email')->getHTML(); ?><br>
         <span class="error"><?php echo $email_message; ?></span><br>
 
-        
         <label>Имe:</label>
         <input type="text" name="first_name" 
                value="<?php echo htmlspecialchars($first_name); ?>">
@@ -48,7 +48,6 @@
                         foreach($cities as $city) :
                             $name = $city->getName();
                             $id = $city->getID();
-                            //$selected = ($id == $city_id) ? true : false;
                         ?>
                             <option value="<?php echo $id ?>" <?php if (isset($city_id1)) {
                                 if ($city_id1 == $id) { ?>selected="true" <?php }; ?>

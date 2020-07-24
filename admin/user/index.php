@@ -1,6 +1,4 @@
 <?php
-
-
 require_once('../../util/secure_conn.php');
 require_once('../../model/database.php');
 
@@ -36,39 +34,32 @@ if ($action == NULL) {
 switch ($action) {
     case 'list_users':
         $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
-       
         if (empty($city_id)) {
             $city_id = 1;
         }
-
         $current_city = CityDB::getCity($city_id);
         $cities = CityDB::getCities();
-        // $users = UserDB::getUsersByCity($city_id);
-
         include('user_list.php');
         break;
-        case 'view_user':
-            $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
-            $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
+
+    case 'view_user':
+        $user_id = filter_input(INPUT_GET,'user_id',FILTER_VALIDATE_INT);
+        $city_id = filter_input(INPUT_GET,'city_id',FILTER_VALIDATE_INT);
             
-            $user = UserDB::getUser($user_id);
-            $user_name = $user->getFirstName()." ".$user->getLastName();
-            $email = $user->getEmail();
-            $address = $user->getUserAddress();
-            $telNumber = $user->getTelNumber();
-            include('user_view.php');
-
+        $user = UserDB::getUser($user_id);
+        $user_name = $user->getFirstName()." ".$user->getLastName();
+        $email = $user->getEmail();
+        $address = $user->getUserAddress();
+        $telNumber = $user->getTelNumber();
+        include('user_view.php');
         break;
-        case 'delete_user':
-            $city_id = filter_input(INPUT_POST,'city_id',FILTER_VALIDATE_INT);
-        
-            $user_id = filter_input(INPUT_POST,'user_id',FILTER_VALIDATE_INT);
-            UserDB::deleteUser($user_id);
 
-            redirect($app_path . 'user/index.php');
-
-            header("Location: .?city_id=$city_id");
-            break;
-
-        }
+    case 'delete_user':
+        $city_id = filter_input(INPUT_POST,'city_id',FILTER_VALIDATE_INT);
+        $user_id = filter_input(INPUT_POST,'user_id',FILTER_VALIDATE_INT);
+        UserDB::deleteUser($user_id);
+        redirect($app_path . 'user/index.php');
+        header("Location: .?city_id=$city_id");
+        break;
+    }
 ?>

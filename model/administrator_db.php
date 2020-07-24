@@ -44,20 +44,16 @@ class AdminDB {
             $admins[]=$admin;
         }
         return $admins;
-
-       }catch(PDOException $e){
+       } catch(PDOException $e){
         $error_message = $e->getMessage();
         display_db_error($error_message);
        }
-        
     }
 
     function get_admin ($admin_id) {
         $db = Database::getDB();
         $query = 'SELECT * FROM administrators 
                     WHERE adminID = :admin_id';
-        
-
         try{
             $statement = $db->prepare($query);
             $statement->bindValue(':admin_id', $admin_id);
@@ -70,21 +66,18 @@ class AdminDB {
             $row['firstName'] ?? 'null',
             $row['lastName'] ?? 'null');
             $admin->setID($row['adminID'] ?? 'null');
-
             return $admin;
 
-        }catch(PDOException $e) {
+        } catch(PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
-        
     }
 
     function get_admin_by_email($email) {
         $db = Database::getDB();
         $query = 'SELECT * FROM administrators
                  WHERE adminEmail = :email';
-
         try{
             $statement = $db->prepare($query);
             $statement->bindValue(":email", $email);
@@ -97,10 +90,7 @@ class AdminDB {
             $row['firstName'],
             $row['lastName']);
             $admin->setID($row['adminID']);
-
-
             return $admin;
-
         }catch(PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
@@ -133,24 +123,19 @@ class AdminDB {
             VALUES (:email, :password, :first_name, :last_name)';
        
        try{
-
-        $statement = $db->prepare($query);
-        $statement->bindValue(':email', $email);
-        $statement->bindValue(':password', $password);
-        $statement->bindValue(':first_name', $first_name);
-        $statement->bindValue(':last_name', $last_name);
-        $statement->execute();
-        $admin_id = $db->lastInsertId();
-        $statement->closeCursor();
-        return $admin_id;
+            $statement = $db->prepare($query);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':password', $password);
+            $statement->bindValue(':first_name', $first_name);
+            $statement->bindValue(':last_name', $last_name);
+            $statement->execute();
+            $admin_id = $db->lastInsertId();
+            $statement->closeCursor();
+            return $admin_id;
        }catch(PDOException $e) {
         $error_message = $e->getMessage();
         display_db_error($error_message);
-
        }
-       
-    
-        
     }
 
     function update_admin($admin_id, $admin, $password_1, $password_2) {
@@ -160,14 +145,12 @@ class AdminDB {
         $first_name = $admin->getFirstName();
         $last_name = $admin->getLastName();
 
-
         $query = 'UPDATE administrators SET adminEmail = :email,
                 firstName = :first_name,
                 lastName = :last_name
             WHERE adminID = :admin_id';
 
         try{
-
             $statement = $db->prepare($query);
             $statement->bindValue(':admin_id', $admin_id);
             $statement->bindValue(':email', $email);
@@ -176,36 +159,31 @@ class AdminDB {
             
             $statement->execute();
             $statement->closeCursor();
-
         }catch(PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
-
         }
-
-       try{
-
-        if (!empty($password_1) && !empty ($password_2)) {
-            if ($password_1 !== $password_2) {
-                display_error('Passwords do not match.');
-            } elseif (strlen($password_1) < 6) {
-                display_error('Password must be at least six characters.');
+        try {
+            if (!empty($password_1) && !empty ($password_2)) {
+                if ($password_1 !== $password_2) {
+                    display_error('Passwords do not match.');
+                } elseif (strlen($password_1) < 6) {
+                    display_error('Password must be at least six characters.');
+                }
+                $password = sha1($email . $password_1);
+                $query = '
+                    UPDATE administrators
+                    SET password = :password
+                    WHERE adminID = :admin_id';
+                $statement = $db->prepare($query);
+                $statement->bindValue(':password', $password);
+                $statement->bindValue(':admin_id', $admin_id);
+                $statement->execute();
+                $statement->closeCursor();
             }
-            $password = sha1($email . $password_1);
-            $query = '
-                UPDATE administrators
-                SET password = :password
-                WHERE adminID = :admin_id';
-            $statement = $db->prepare($query);
-            $statement->bindValue(':password', $password);
-            $statement->bindValue(':admin_id', $admin_id);
-            $statement->execute();
-            $statement->closeCursor();
-        }
-
-       }catch(PDOException $e) {
-        $error_message = $e->getMessage();
-        display_db_error($error_message);
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            display_db_error($error_message);
         }   
     }
 
@@ -218,13 +196,11 @@ class AdminDB {
             $statement->bindValue(':admin_id', $admin_id);
             $statement->execute();
             $statement->closeCursor();
-
         }
         catch (PDOException $e) {
             $error_message = $e->getMessage();
             display_db_error($error_message);
         }
-       
     }
 }
 ?>

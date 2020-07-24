@@ -43,7 +43,7 @@ switch ($action) {
             $product = ProductDB::getProduct($id);
             $products[] = $product;
         }
-        
+        $city_id=100;
         include('home.php');
         break;
     case 'cities_filter':
@@ -60,11 +60,6 @@ switch ($action) {
         $products=ProductDB::getProductsByCategory($category_id);
         include('home.php');
         break;
-    /*case 'categories_cities_filter':
-        $city_id=filter_input(INPUT_POST, 'selectedCity');
-        $products=ProductDB::getProductsByCategoryAndCity($category_id, $city_id);
-        include('home.php');
-        break;*/
     case 'product' :
         $product = ProductDB::getProduct($product_id);
         $category_id = $product->getCategory()->getID();
@@ -123,12 +118,9 @@ switch ($action) {
         $comments=array();
         $comments=CommentDB::getCommentsByProduct($product_id);
         include('product_view.php');
-
         break;
     default:
         display_error("Unknown action: " . $action);
         break;
 }
-
-
 ?>

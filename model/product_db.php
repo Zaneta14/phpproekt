@@ -109,17 +109,6 @@ class ProductDB {
             return $products;    
     }
     
-    public function getProductsByCategoryAndCity($category_id, $city_id) {
-        $productsByCategory=ProductDB::getProductsByCategory($category_id);
-        $productsByCity=ProductDB::getProductsByCity($city_id);
-        $products=array();
-        foreach($productsByCategory as $productByCategory) {
-            if ($productByCategory->getCity()->getID == $city_id)
-                $products[]=$productByCategory;
-        }
-        return $products;
-    }
-
     public  function getProduct($product_id) {
         $db = Database::getDB();
         $query = 'SELECT * 

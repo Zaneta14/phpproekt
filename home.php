@@ -9,10 +9,12 @@ include 'view/sidebar.php';
 <h3>
     <?php if (isset($category_name)) { ?>
         Производи од категорија <?php echo $category_name ?>
-    <?php } elseif (isset($city_name)) { ?>
-        Производи од град <?php echo $city_name ?>
     <?php } elseif (isset($user_name)) { ?>
         Производи од корисник <?php echo $user_name ?>
+    <?php } elseif ($city_id==null) { ?>
+        Одберете град.
+    <?php } elseif (isset($city_name)) { ?>
+        Производи од град <?php echo $city_name ?>
     <?php } else { ?>
         Производи на неделата
     <?php } ?>
@@ -20,7 +22,7 @@ include 'view/sidebar.php';
 
 <table >
     <?php if ($products==null) { ?>
-        <p>Нема производи во оваа категорија.</p>
+        <p>Не се пронајдени производи.</p>
     <?php } else { ?>
         <?php foreach ($products as $product) :
             

@@ -1,27 +1,22 @@
-<?php include '../../view/header.php'; ?>
-<?php include '../../view/sidebar_admin.php'; ?>
-
 <?php 
+    include '../../view/header.php';
+    include '../../view/sidebar_admin.php';
 
-require_once('../../model/database.php');
-require_once('../../model/category.php');
-require_once('../../model/category_db.php');
-require_once('../../model/administrator.php');
-require_once('../../model/administrator_db.php');
+    require_once('../../model/database.php');
+    require_once('../../model/category.php');
+    require_once('../../model/category_db.php');
+    require_once('../../model/administrator.php');
+    require_once('../../model/administrator_db.php');
 
-require_once('../../model/city.php');
-require_once('../../model/city_db.php');
-require_once('../../model/user.php');
-require_once('../../model/user_db.php');
-
-
-require_once('../../util/main.php');
-
-
-
+    require_once('../../model/city.php');
+    require_once('../../model/city_db.php');
+    require_once('../../model/user.php');
+    require_once('../../model/user_db.php');
+    require_once('../../util/main.php');
 ?>
+
 <main class="nofloat">
-    <h1>Профили на Администратори</h1>
+    <h1>Администратор</h1>
     <?php if (isset($_SESSION['admin'])) : ?>
     <h2>Мој профил</h2>
     <p><?php echo $admin->getFirstName() . ' ' . $admin->getLastName() . ' (' . $admin->getEmail() . ')'; ?></p>
@@ -35,8 +30,7 @@ require_once('../../util/main.php');
     <br>
     <hr style="border-width: 1px 1px 0;
            border-style: solid;
-           border-color: #e3e3e3; 
-           
+           border-color: #e3e3e3;            
            margin-left: auto;
            margin-right: auto;">
     <?php if ( count($admins) > 1 ) : ?>
@@ -78,9 +72,6 @@ require_once('../../util/main.php');
            margin-left: auto;
            margin-right: auto;">
     <h2>Додади Администратор</h2>
-
-   
-    
     <form action="." method="post" >
     <div id = "left_column">
     <input type="hidden" name="action" value="create">

@@ -133,21 +133,21 @@ class OrderDB {
         foreach($products as $product) {
             $query='SELECT * FROM orderItems WHERE productID=:product_id';
             $product_id=$product->getID();
-                $statement = $db->prepare($query);
-                $statement->bindValue(':product_id', $product_id);
-                $statement->execute();
-                $rows = $statement->fetchAll();
-                $statement->closeCursor();
+            $statement = $db->prepare($query);
+            $statement->bindValue(':product_id', $product_id);
+            $statement->execute();
+            $rows = $statement->fetchAll();
+            $statement->closeCursor();
 
-                foreach($rows as $row) {
-                    $order_id=$row['orderID'];
-                    $order=OrderDB::getOrder($order_id);
-                    $order_item=new OrderItem($order, $product, $row['shipDate']);
-                    $order_item->setID($row['orderItemID']);
-                    $order_items[]=$order_item;
-                }
+            foreach($rows as $row) {
+                $order_id=$row['orderID'];
+                $order=OrderDB::getOrder($order_id);
+                $order_item=new OrderItem($order, $product, $row['shipDate']);
+                $order_item->setID($row['orderItemID']);
+                $order_items[]=$order_item;
             }
-            return $order_items;
+        }
+        return $order_items;
     }
 
     function getOrderItem($order_item_id) {
@@ -174,22 +174,7 @@ class OrderDB {
             display_db_error($error_message);
         }
     }
-
-    //slicna funkcija ke treba vo product_db
-    /*function set_ship_date($order_id) {
-        global $db;
-        $ship_date = date("Y-m-d H:i:s");
-        $query = '
-            UPDATE orders
-            SET shipDate = :ship_date
-            WHERE orderID = :order_id';
-        $statement = $db->prepare($query);
-        $statement->bindValue(':ship_date', $ship_date);
-        $statement->bindValue(':order_id', $order_id);
-        $statement->execute();
-        $statement->closeCursor();
-    }*/
-
+    
     function deleteOrder($order_id) {
         $db = Database::getDB();
 

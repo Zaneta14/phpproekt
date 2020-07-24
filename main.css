@@ -135,3 +135,6 @@ a:hover{
     color: rgb(8, 24, 3);
     
 }
+.error {
+    color: red;
+}

@@ -96,11 +96,6 @@ class Product {
         return $this->price;
     }
 
-    public function getPriceFormatted() {
-        $formatted_price = number_format($this->price, 2);
-        return $formatted_price;
-    }
-
     public function setPrice($value) {
         $this->price = $value;
     }
